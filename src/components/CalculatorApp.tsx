@@ -7,6 +7,7 @@ import { IndicatorsGrid } from "@/components/results/IndicatorsGrid";
 import { InterpretationMessages } from "@/components/results/InterpretationMessages";
 import { ScenariosComparison } from "@/components/scenarios/ScenariosComparison";
 import { ConceptExplanations } from "@/components/shared/ConceptExplanations";
+import { MethodologyNote } from "@/components/shared/MethodologyNote";
 
 export function CalculatorApp() {
   const {
@@ -35,15 +36,15 @@ export function CalculatorApp() {
             id="intro-heading"
             className="mb-2 text-xl font-semibold text-slate-800"
           >
-            ¿Qué calcula esta herramienta?
+            Cómo funciona
           </h2>
           <p className="leading-relaxed text-slate-600">
-            Ingresa los datos básicos de tu negocio para estimar tus ingresos,
-            costos, utilidad, punto de equilibrio y el tiempo aproximado para
-            recuperar tu inversión. No necesitas conocimientos de contabilidad.
-            Puedes usar el botón{" "}
-            <strong className="font-medium text-slate-800">Cargar ejemplo</strong>{" "}
-            para ver cómo funciona con una cafetería de referencia.
+            Ingresa los datos de tu negocio y descubre si es rentable: cuánto
+            podrías ganar, cuántas unidades necesitas vender para no perder
+            dinero y cuándo podrías recuperar tu inversión. No necesitas
+            conocimientos de contabilidad. Si quieres explorar primero con un
+            ejemplo, usa el botón{" "}
+            <strong className="font-medium text-slate-800">Cargar ejemplo</strong>.
           </p>
         </section>
 
@@ -99,6 +100,8 @@ export function CalculatorApp() {
               scenarios={results.scenarios}
               currency={results.validatedInputs.currency}
             />
+
+            <MethodologyNote />
 
             <ConceptExplanations />
           </div>

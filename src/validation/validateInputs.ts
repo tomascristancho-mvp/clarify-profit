@@ -16,6 +16,7 @@ function parseNumber(raw: string): number {
 
 interface MonetaryOptions {
   allowZero?: boolean; // true = 0 is valid; false = must be > 0
+  plural?: boolean;    // true when the fieldLabel subject is grammatically plural
 }
 
 function validateMonetaryField(
@@ -25,16 +26,24 @@ function validateMonetaryField(
 ): string | null {
   const num = parseNumber(value);
   if (Number.isNaN(num)) {
-    return `${fieldLabel} debe ser un número válido.`;
+    return options.plural
+      ? `${fieldLabel} deben ser un número válido.`
+      : `${fieldLabel} debe ser un número válido.`;
   }
   if (num < 0) {
-    return `${fieldLabel} no puede ser un valor negativo.`;
+    return options.plural
+      ? `${fieldLabel} no pueden ser negativos.`
+      : `${fieldLabel} no puede ser negativo.`;
   }
   if (!options.allowZero && num === 0) {
-    return `${fieldLabel} debe ser mayor que cero.`;
+    return options.plural
+      ? `${fieldLabel} deben ser mayor que cero.`
+      : `${fieldLabel} debe ser mayor que cero.`;
   }
   if (num > MAX_MONETARY_VALUE) {
-    return `${fieldLabel} supera el valor máximo permitido (${MAX_MONETARY_VALUE.toLocaleString("es-CO")}).`;
+    return options.plural
+      ? `${fieldLabel} superan el valor máximo permitido (${MAX_MONETARY_VALUE.toLocaleString("es-CO")}).`
+      : `${fieldLabel} supera el valor máximo permitido (${MAX_MONETARY_VALUE.toLocaleString("es-CO")}).`;
   }
   return null;
 }
@@ -46,7 +55,7 @@ export function validateInputs(inputs: FormInputs): ValidationResult {
   const fixedCostsError = validateMonetaryField(
     inputs.fixedCosts,
     "Los costos fijos mensuales",
-    { allowZero: true }
+    { allowZero: true, plural: true }
   );
   if (fixedCostsError) errors.fixedCosts = fixedCostsError;
 

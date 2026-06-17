@@ -44,6 +44,11 @@ export function ResultsSummary({ operatingProfit, currency }: ResultsSummaryProp
           <p className={`text-3xl font-bold ${valueColorClass}`}>
             {formatCurrency(Math.abs(operatingProfit), currency)}
           </p>
+          {isProfitable && (
+            <p className="mt-1 text-sm text-emerald-700">
+              Antes de impuestos y costos no incluidos en el formulario.
+            </p>
+          )}
           {!isProfitable && !isBreakeven && (
             <p className="mt-1 text-sm text-red-600">
               El negocio pierde{" "}

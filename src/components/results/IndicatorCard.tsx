@@ -16,7 +16,7 @@ export function IndicatorCard<T>({
 }: IndicatorCardProps<T>) {
   return (
     <article className="flex flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-      <h3 className="mb-2 text-sm font-medium text-slate-500">{title}</h3>
+      <h4 className="mb-2 text-sm font-medium text-slate-500">{title}</h4>
 
       {result.status === "valido" ? (
         <p className="mb-3 text-xl font-semibold text-slate-900">
