@@ -16,6 +16,8 @@ import { generarInterpretaciones } from "@/domain/interpretations";
 import { INITIAL_FORM_INPUTS, EXAMPLE_FORM_INPUTS } from "@/config/exampleInputs";
 import type { DiagnosisResult } from "@/domain/diagnosis";
 import { diagnosticarNegocio } from "@/domain/diagnosis";
+import type { WhatIfSimulation } from "@/domain/whatIf";
+import { simularCambios } from "@/domain/whatIf";
 
 export interface CalculatorResults {
   validatedInputs: ValidatedInputs;
@@ -23,6 +25,7 @@ export interface CalculatorResults {
   scenarios: ScenarioResult[];
   interpretations: InterpretationMessage[];
   diagnosis: DiagnosisResult;
+  simulations: WhatIfSimulation[];
 }
 
 function runCalculation(inputs: FormInputs): CalculatorResults | null {
@@ -36,7 +39,8 @@ function runCalculation(inputs: FormInputs): CalculatorResults | null {
     scenarios
   );
   const diagnosis = diagnosticarNegocio(validation.data, calculation, scenarios);
-  return { validatedInputs: validation.data, calculation, scenarios, interpretations, diagnosis };
+  const simulations = simularCambios(validation.data, calculation);
+  return { validatedInputs: validation.data, calculation, scenarios, interpretations, diagnosis, simulations };
 }
 
 export function useCalculatorState() {
@@ -72,7 +76,8 @@ export function useCalculatorState() {
       scenarios
     );
     const diagnosis = diagnosticarNegocio(validation.data, calculation, scenarios);
-    setResults({ validatedInputs: validation.data, calculation, scenarios, interpretations, diagnosis });
+    const simulations = simularCambios(validation.data, calculation);
+    setResults({ validatedInputs: validation.data, calculation, scenarios, interpretations, diagnosis, simulations });
   }, [inputs]);
 
   const handleLoadExample = useCallback(() => {

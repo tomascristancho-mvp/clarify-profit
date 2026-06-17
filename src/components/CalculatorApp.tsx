@@ -9,6 +9,7 @@ import { ScenariosComparison } from "@/components/scenarios/ScenariosComparison"
 import { ConceptExplanations } from "@/components/shared/ConceptExplanations";
 import { MethodologyNote } from "@/components/shared/MethodologyNote";
 import { ExecutiveDiagnosis } from "@/components/results/ExecutiveDiagnosis";
+import { WhatIfSimulator } from "@/components/results/WhatIfSimulator";
 
 export function CalculatorApp() {
   const {
@@ -94,6 +95,11 @@ export function CalculatorApp() {
 
             <IndicatorsGrid
               result={results.calculation}
+              currency={results.validatedInputs.currency}
+            />
+
+            <WhatIfSimulator
+              simulations={results.simulations}
               currency={results.validatedInputs.currency}
             />
 
