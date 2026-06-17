@@ -10,6 +10,7 @@ import { ConceptExplanations } from "@/components/shared/ConceptExplanations";
 import { MethodologyNote } from "@/components/shared/MethodologyNote";
 import { ExecutiveDiagnosis } from "@/components/results/ExecutiveDiagnosis";
 import { WhatIfSimulator } from "@/components/results/WhatIfSimulator";
+import { ReverseCalculator } from "@/components/results/ReverseCalculator";
 
 export function CalculatorApp() {
   const {
@@ -101,6 +102,11 @@ export function CalculatorApp() {
             <WhatIfSimulator
               simulations={results.simulations}
               currency={results.validatedInputs.currency}
+            />
+
+            <ReverseCalculator
+              calculation={results.calculation}
+              validatedInputs={results.validatedInputs}
             />
 
             <InterpretationMessages messages={results.interpretations} />
