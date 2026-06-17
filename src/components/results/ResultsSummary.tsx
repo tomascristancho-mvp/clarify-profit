@@ -10,60 +10,67 @@ export function ResultsSummary({ operatingProfit, currency }: ResultsSummaryProp
   const isProfitable = operatingProfit > 0;
   const isBreakeven = operatingProfit === 0;
 
-  const colorClasses = isProfitable
-    ? "border-emerald-300 bg-emerald-50"
+  const borderColor = isProfitable
+    ? "border-l-emerald-500"
     : isBreakeven
-    ? "border-slate-300 bg-slate-50"
-    : "border-red-300 bg-red-50";
+      ? "border-l-slate-400"
+      : "border-l-red-500";
+
+  const bgClass = isProfitable
+    ? "bg-gradient-to-br from-emerald-50 to-white border-emerald-100"
+    : isBreakeven
+      ? "bg-gradient-to-br from-slate-50 to-white border-slate-200"
+      : "bg-gradient-to-br from-red-50 to-white border-red-100";
 
   const valueColorClass = isProfitable
     ? "text-emerald-700"
     : isBreakeven
-    ? "text-slate-700"
-    : "text-red-700";
+      ? "text-slate-700"
+      : "text-red-700";
 
   const label = isProfitable
     ? "Utilidad operativa mensual estimada"
     : isBreakeven
-    ? "Punto de equilibrio exacto"
-    : "Pérdida operativa mensual estimada";
+      ? "Punto de equilibrio exacto"
+      : "Pérdida operativa mensual estimada";
 
-  const arrow = isProfitable ? "▲" : isBreakeven ? "=" : "▼";
+  const icon = isProfitable ? "▲" : isBreakeven ? "=" : "▼";
 
   return (
-    <div className={`rounded-xl border-2 p-6 ${colorClasses}`}>
-      <div className="flex items-start gap-3">
+    <div
+      className={`rounded-2xl border border-l-4 p-6 shadow-sm ${bgClass} ${borderColor}`}
+    >
+      <p className="mb-2 text-sm font-medium text-slate-500">{label}</p>
+
+      <div className="flex items-baseline gap-3">
         <span
-          className={`flex-shrink-0 text-2xl ${valueColorClass}`}
+          className={`text-xl font-bold ${valueColorClass}`}
           aria-hidden="true"
         >
-          {arrow}
+          {icon}
         </span>
-        <div>
-          <p className="mb-1 text-sm font-medium text-slate-600">{label}</p>
-          <p className={`text-3xl font-bold ${valueColorClass}`}>
-            {formatCurrency(Math.abs(operatingProfit), currency)}
-          </p>
-          {isProfitable && (
-            <p className="mt-1 text-sm text-emerald-700">
-              Antes de impuestos y costos no incluidos en el formulario.
-            </p>
-          )}
-          {!isProfitable && !isBreakeven && (
-            <p className="mt-1 text-sm text-red-600">
-              El negocio pierde{" "}
-              {formatCurrency(Math.abs(operatingProfit), currency)} al mes con
-              las condiciones actuales.
-            </p>
-          )}
-          {isBreakeven && (
-            <p className="mt-1 text-sm text-slate-600">
-              Los ingresos cubren exactamente los costos. No hay pérdida ni
-              ganancia.
-            </p>
-          )}
-        </div>
+        <p className={`text-5xl font-bold tracking-tight sm:text-6xl ${valueColorClass}`}>
+          {formatCurrency(Math.abs(operatingProfit), currency)}
+        </p>
       </div>
+
+      {isProfitable && (
+        <p className="mt-3 text-sm text-emerald-700/80">
+          Antes de impuestos y costos no incluidos en el formulario.
+        </p>
+      )}
+      {!isProfitable && !isBreakeven && (
+        <p className="mt-3 text-sm text-red-600/80">
+          El negocio pierde{" "}
+          <strong>{formatCurrency(Math.abs(operatingProfit), currency)}</strong>{" "}
+          al mes con las condiciones actuales.
+        </p>
+      )}
+      {isBreakeven && (
+        <p className="mt-3 text-sm text-slate-600">
+          Los ingresos cubren exactamente los costos. No hay pérdida ni ganancia.
+        </p>
+      )}
     </div>
   );
 }

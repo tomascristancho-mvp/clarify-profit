@@ -1,18 +1,26 @@
 export function EducationalNotice() {
   return (
-    <footer className="mt-8 border-t border-slate-200 bg-slate-50">
-      <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6">
-        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-4">
-          <p className="text-sm leading-relaxed text-amber-800">
-            Los resultados son estimaciones educativas calculadas con los datos que ingresaste.
-            No tienen en cuenta impuestos, costos de oportunidad ni imprevistos.
-            Antes de tomar decisiones financieras importantes,{" "}
-            <strong>consulta con un contador o asesor de confianza.</strong>
+    <footer className="bg-slate-900">
+      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
+        <div className="mb-5 rounded-xl border border-white/10 bg-white/5 px-5 py-4">
+          <p className="text-sm leading-relaxed text-slate-300">
+            Los resultados son{" "}
+            <strong className="font-semibold text-white">estimaciones educativas</strong>{" "}
+            calculadas con los datos que ingresaste. No tienen en cuenta impuestos,
+            costos de oportunidad ni imprevistos. Antes de tomar decisiones financieras
+            importantes,{" "}
+            <strong className="font-semibold text-white">
+              consulta con un contador o asesor de confianza.
+            </strong>
           </p>
         </div>
-        <p className="mt-4 text-center text-xs text-slate-400">
-          Negocio Claro · Herramienta educativa para emprendedores
-        </p>
+
+        <div className="flex flex-col items-center gap-1 sm:flex-row sm:justify-between">
+          <p className="text-sm font-semibold text-white">Negocio Claro</p>
+          <p className="text-xs text-slate-500">
+            Herramienta educativa gratuita para emprendedores
+          </p>
+        </div>
       </div>
     </footer>
   );

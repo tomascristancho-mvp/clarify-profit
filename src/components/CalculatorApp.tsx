@@ -33,26 +33,8 @@ export function CalculatorApp() {
       </div>
 
       <div className="flex flex-col gap-10">
-        {/* Introduction */}
-        <section aria-labelledby="intro-heading">
-          <h2
-            id="intro-heading"
-            className="mb-2 text-xl font-semibold text-slate-800"
-          >
-            Cómo funciona
-          </h2>
-          <p className="leading-relaxed text-slate-600">
-            Ingresa los datos de tu negocio y descubre si es rentable: cuánto
-            podrías ganar, cuántas unidades necesitas vender para no perder
-            dinero y cuándo podrías recuperar tu inversión. No necesitas
-            conocimientos de contabilidad. Si quieres explorar primero con un
-            ejemplo, usa el botón{" "}
-            <strong className="font-medium text-slate-800">Cargar ejemplo</strong>.
-          </p>
-        </section>
-
         {/* Form */}
-        <section aria-labelledby="form-heading">
+        <section id="form-section" aria-labelledby="form-heading">
           <h2
             id="form-heading"
             className="mb-4 text-xl font-semibold text-slate-800"
@@ -73,7 +55,7 @@ export function CalculatorApp() {
 
         {/* Results — rendered only after a successful calculation */}
         {results && (
-          <div className="flex flex-col gap-8">
+          <div className="animate-fade-in-up flex flex-col gap-8">
             <section aria-labelledby="results-heading">
               <h2
                 id="results-heading"

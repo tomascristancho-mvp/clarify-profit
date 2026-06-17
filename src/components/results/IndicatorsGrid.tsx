@@ -1,6 +1,7 @@
 import type { CalculationResult, BreakevenUnits } from "@/domain/types";
 import type { CurrencyCode } from "@/config/currencies";
 import { IndicatorCard } from "./IndicatorCard";
+import { ProfitBreakdownChart } from "@/components/charts/ProfitBreakdownChart";
 import { formatCurrency } from "@/format/currency";
 import { formatPercentage } from "@/format/percentage";
 
@@ -19,6 +20,20 @@ export function IndicatorsGrid({ result, currency }: IndicatorsGridProps) {
         Indicadores principales
       </h3>
 
+      {/* Visual breakdown chart */}
+      <div className="mb-5 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+          Desglose mensual
+        </p>
+        <ProfitBreakdownChart
+          monthlyRevenue={result.monthlyRevenue}
+          totalCosts={result.totalCosts}
+          operatingProfit={result.operatingProfit}
+          currency={currency}
+        />
+      </div>
+
+      {/* Indicator cards */}
       <div className="grid gap-4 sm:grid-cols-2">
         <IndicatorCard
           title="Margen de contribución"
@@ -64,16 +79,18 @@ export function IndicatorsGrid({ result, currency }: IndicatorsGridProps) {
       </div>
 
       {result.breakevenRevenue.status === "valido" && (
-        <div className="mt-4 rounded-md border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
-          <p className="mb-1 font-medium">Ventas necesarias para el equilibrio</p>
-          <p>
+        <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
+          <p className="mb-1 font-semibold text-slate-700">
+            Ventas necesarias para el equilibrio
+          </p>
+          <p className="text-slate-600">
             Teórico:{" "}
-            <strong>
+            <strong className="text-slate-800">
               {formatCurrency(result.breakevenRevenue.value.theoretical, currency)}
             </strong>
             {" · "}
             Vendiendo unidades completas:{" "}
-            <strong>
+            <strong className="text-slate-800">
               {formatCurrency(
                 result.breakevenRevenue.value.atMinimumWholeUnits,
                 currency

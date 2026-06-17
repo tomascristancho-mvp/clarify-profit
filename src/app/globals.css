@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc; /* slate-50 */
-  --foreground: #0f172a; /* slate-900 */
+  --background: #f6f7fb;
+  --foreground: #0f172a;
 }
 
 @theme inline {
@@ -13,6 +13,7 @@
 
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -25,6 +26,34 @@ body {
   outline: 2px solid #4f46e5;
   outline-offset: 2px;
 }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Staggered children for results sections */
+.animate-fade-in-up > * {
+  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-fade-in-up > *:nth-child(1) { animation-delay: 0ms; }
+.animate-fade-in-up > *:nth-child(2) { animation-delay: 60ms; }
+.animate-fade-in-up > *:nth-child(3) { animation-delay: 120ms; }
+.animate-fade-in-up > *:nth-child(4) { animation-delay: 180ms; }
+.animate-fade-in-up > *:nth-child(5) { animation-delay: 240ms; }
+.animate-fade-in-up > *:nth-child(6) { animation-delay: 300ms; }
+.animate-fade-in-up > *:nth-child(7) { animation-delay: 360ms; }
+.animate-fade-in-up > *:nth-child(8) { animation-delay: 420ms; }
 
 /* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
