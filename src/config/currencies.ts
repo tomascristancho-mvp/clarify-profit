@@ -8,9 +8,9 @@ export interface CurrencyConfig {
 }
 
 export const CURRENCIES: Record<CurrencyCode, CurrencyConfig> = {
-  COP: { code: "COP", label: "Peso colombiano (COP)", locale: "es-CO", decimals: 0 },
-  USD: { code: "USD", label: "Dólar estadounidense (USD)", locale: "en-US", decimals: 2 },
-  EUR: { code: "EUR", label: "Euro (EUR)", locale: "es-ES", decimals: 2 },
+  COP: { code: "COP", label: "Peso colombiano", locale: "es-CO", decimals: 0 },
+  USD: { code: "USD", label: "Dólar estadounidense", locale: "en-US", decimals: 2 },
+  EUR: { code: "EUR", label: "Euro", locale: "es-ES", decimals: 2 },
 };
 
 export const DEFAULT_CURRENCY: CurrencyCode = "COP";
