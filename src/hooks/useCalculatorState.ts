@@ -14,12 +14,15 @@ import { calcular } from "@/domain/calculations";
 import { calcularEscenarios } from "@/domain/scenarios";
 import { generarInterpretaciones } from "@/domain/interpretations";
 import { INITIAL_FORM_INPUTS, EXAMPLE_FORM_INPUTS } from "@/config/exampleInputs";
+import type { DiagnosisResult } from "@/domain/diagnosis";
+import { diagnosticarNegocio } from "@/domain/diagnosis";
 
 export interface CalculatorResults {
   validatedInputs: ValidatedInputs;
   calculation: CalculationResult;
   scenarios: ScenarioResult[];
   interpretations: InterpretationMessage[];
+  diagnosis: DiagnosisResult;
 }
 
 function runCalculation(inputs: FormInputs): CalculatorResults | null {
@@ -32,7 +35,8 @@ function runCalculation(inputs: FormInputs): CalculatorResults | null {
     calculation,
     scenarios
   );
-  return { validatedInputs: validation.data, calculation, scenarios, interpretations };
+  const diagnosis = diagnosticarNegocio(validation.data, calculation, scenarios);
+  return { validatedInputs: validation.data, calculation, scenarios, interpretations, diagnosis };
 }
 
 export function useCalculatorState() {
@@ -67,7 +71,8 @@ export function useCalculatorState() {
       calculation,
       scenarios
     );
-    setResults({ validatedInputs: validation.data, calculation, scenarios, interpretations });
+    const diagnosis = diagnosticarNegocio(validation.data, calculation, scenarios);
+    setResults({ validatedInputs: validation.data, calculation, scenarios, interpretations, diagnosis });
   }, [inputs]);
 
   const handleLoadExample = useCallback(() => {

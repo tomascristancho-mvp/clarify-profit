@@ -8,6 +8,7 @@ import { InterpretationMessages } from "@/components/results/InterpretationMessa
 import { ScenariosComparison } from "@/components/scenarios/ScenariosComparison";
 import { ConceptExplanations } from "@/components/shared/ConceptExplanations";
 import { MethodologyNote } from "@/components/shared/MethodologyNote";
+import { ExecutiveDiagnosis } from "@/components/results/ExecutiveDiagnosis";
 
 export function CalculatorApp() {
   const {
@@ -88,6 +89,8 @@ export function CalculatorApp() {
                 currency={results.validatedInputs.currency}
               />
             </section>
+
+            <ExecutiveDiagnosis diagnosis={results.diagnosis} />
 
             <IndicatorsGrid
               result={results.calculation}
