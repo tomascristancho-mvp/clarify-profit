@@ -6,23 +6,23 @@ interface InterpretationMessagesProps {
 
 const TYPE_CONFIG = {
   alerta: {
-    containerClass: "border-red-200 bg-red-50",
-    iconClass: "text-red-500",
-    textClass: "text-red-800",
+    borderClass: "border-l-red-400",
+    iconClass: "text-red-400",
+    textClass: "text-red-700",
     icon: "⚠",
     srLabel: "Alerta",
   },
   informacion: {
-    containerClass: "border-blue-200 bg-blue-50",
-    iconClass: "text-blue-500",
-    textClass: "text-blue-800",
+    borderClass: "border-l-blue-400",
+    iconClass: "text-blue-400",
+    textClass: "text-blue-700",
     icon: "ℹ",
     srLabel: "Información",
   },
   positivo: {
-    containerClass: "border-emerald-200 bg-emerald-50",
-    iconClass: "text-emerald-600",
-    textClass: "text-emerald-800",
+    borderClass: "border-l-emerald-400",
+    iconClass: "text-emerald-500",
+    textClass: "text-emerald-700",
     icon: "✓",
     srLabel: "Positivo",
   },
@@ -35,17 +35,17 @@ export function InterpretationMessages({ messages }: InterpretationMessagesProps
     <section aria-labelledby="interpretation-heading">
       <h3
         id="interpretation-heading"
-        className="mb-3 text-lg font-semibold text-slate-800"
+        className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400"
       >
         Interpretación educativa
       </h3>
-      <ul className="flex flex-col gap-2" role="list">
+      <ul className="flex flex-col gap-1.5" role="list">
         {messages.map((message, index) => {
           const config = TYPE_CONFIG[message.type];
           return (
             <li
               key={index}
-              className={`flex items-start gap-3 rounded-md border px-4 py-3 ${config.containerClass}`}
+              className={`flex items-start gap-3 rounded border-l-4 bg-white px-3 py-2.5 ${config.borderClass}`}
             >
               <span
                 className={`flex-shrink-0 font-bold ${config.iconClass}`}
@@ -53,7 +53,7 @@ export function InterpretationMessages({ messages }: InterpretationMessagesProps
               >
                 {config.icon}
               </span>
-              <p className={`text-sm leading-relaxed ${config.textClass}`}>
+              <p className={`text-xs leading-relaxed ${config.textClass}`}>
                 <span className="sr-only">{config.srLabel}: </span>
                 {message.message}
               </p>

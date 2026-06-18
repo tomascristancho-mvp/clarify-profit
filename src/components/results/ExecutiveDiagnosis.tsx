@@ -8,6 +8,7 @@ interface RiskConfig {
   badgeClass: string;
   iconBgClass: string;
   textClass: string;
+  footerBg: string;
 }
 
 const RISK_CONFIG: Record<RiskLevel, RiskConfig> = {
@@ -19,6 +20,7 @@ const RISK_CONFIG: Record<RiskLevel, RiskConfig> = {
     badgeClass: "bg-emerald-100 text-emerald-800 ring-emerald-200",
     iconBgClass: "bg-emerald-500 text-white",
     textClass: "text-emerald-900",
+    footerBg: "bg-emerald-100/60",
   },
   medio: {
     label: "Riesgo moderado",
@@ -28,6 +30,7 @@ const RISK_CONFIG: Record<RiskLevel, RiskConfig> = {
     badgeClass: "bg-amber-100 text-amber-800 ring-amber-200",
     iconBgClass: "bg-amber-500 text-white",
     textClass: "text-amber-900",
+    footerBg: "bg-amber-100/60",
   },
   alto: {
     label: "Riesgo alto",
@@ -37,6 +40,7 @@ const RISK_CONFIG: Record<RiskLevel, RiskConfig> = {
     badgeClass: "bg-orange-100 text-orange-800 ring-orange-200",
     iconBgClass: "bg-orange-500 text-white",
     textClass: "text-orange-900",
+    footerBg: "bg-orange-100/60",
   },
   no_viable: {
     label: "No viable con estos datos",
@@ -46,7 +50,21 @@ const RISK_CONFIG: Record<RiskLevel, RiskConfig> = {
     badgeClass: "bg-red-100 text-red-800 ring-red-200",
     iconBgClass: "bg-red-500 text-white",
     textClass: "text-red-900",
+    footerBg: "bg-red-100/60",
   },
+};
+
+// Purely presentational — does not modify diagnosis logic or invent data.
+// Framed as exploration suggestions, not financial advice or guarantees.
+const NEXT_STEP: Record<RiskLevel, string> = {
+  bajo:
+    "Explora si puedes escalar el volumen de ventas o diversificar fuentes de ingreso manteniendo los costos controlados.",
+  medio:
+    "Simula qué pasaría si las ventas cayeran un 20% y evalúa cuánto margen de seguridad tienes frente al punto de equilibrio.",
+  alto:
+    "Revisa cuáles costos fijos son reducibles a corto plazo y considera si el precio puede ajustarse sin afectar la demanda.",
+  no_viable:
+    "Revisa el precio de venta y el costo variable por unidad. Con los valores actuales, cada unidad vendida incrementa la pérdida.",
 };
 
 interface ExecutiveDiagnosisProps {
@@ -65,41 +83,55 @@ export function ExecutiveDiagnosis({ diagnosis }: ExecutiveDiagnosisProps) {
         Diagnóstico ejecutivo
       </h3>
 
+      {/* overflow-hidden clips the footer strip to the rounded corners */}
       <div
-        className={`rounded-2xl border border-l-4 p-5 shadow-sm ${config.bgClass} ${config.borderColor}`}
+        className={`overflow-hidden rounded-2xl border border-l-4 shadow-sm ${config.bgClass} ${config.borderColor}`}
       >
-        {/* Risk badge row */}
-        <div className="mb-3 flex items-center gap-2.5">
-          <span
-            className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold ${config.iconBgClass}`}
-            aria-hidden="true"
-          >
-            {config.icon}
-          </span>
-          <span
-            className={`rounded-full px-3 py-0.5 text-xs font-semibold ring-1 ring-inset ${config.badgeClass}`}
-          >
-            {config.label}
-          </span>
+        {/* ── Zone 1 & 2: Veredicto, resumen y factor de riesgo ─── */}
+        <div className="p-5">
+          {/* Risk badge */}
+          <div className="mb-3 flex items-center gap-2.5">
+            <span
+              className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold ${config.iconBgClass}`}
+              aria-hidden="true"
+            >
+              {config.icon}
+            </span>
+            <span
+              className={`rounded-full px-3 py-0.5 text-xs font-semibold ring-1 ring-inset ${config.badgeClass}`}
+            >
+              {config.label}
+            </span>
+          </div>
+
+          <p className="sr-only">Nivel de riesgo: {config.label}.</p>
+
+          {/* Summary */}
+          <p className={`text-sm leading-relaxed ${config.textClass}`}>
+            {diagnosis.summary}
+          </p>
+
+          {/* Factor de riesgo principal */}
+          {diagnosis.mainRiskFactor && (
+            <div className="mt-3 flex items-start gap-2 border-t border-black/5 pt-3">
+              <span aria-hidden="true" className="mt-px flex-shrink-0 text-sm opacity-40">
+                ⚠
+              </span>
+              <p className="text-xs text-slate-600">
+                <span className="font-semibold text-slate-700">Factor de riesgo: </span>
+                {diagnosis.mainRiskFactor}
+              </p>
+            </div>
+          )}
         </div>
 
-        {/* Screen-reader level announcement */}
-        <p className="sr-only">Nivel de riesgo: {config.label}.</p>
-
-        {/* Summary */}
-        <p className={`text-sm leading-relaxed ${config.textClass}`}>
-          {diagnosis.summary}
-        </p>
-
-        {/* Main risk factor */}
-        {diagnosis.mainRiskFactor && (
-          <div className="mt-3 border-t border-black/5 pt-3">
-            <p className="text-xs text-slate-600">
-              <span className="font-semibold">Factor de riesgo principal: </span>
-              {diagnosis.mainRiskFactor}
-            </p>
-          </div>
-        )}
+        {/* ── Zone 3: Para explorar ──────────────────────────────── */}
+        <div className={`border-t border-black/5 px-5 py-3 ${config.footerBg}`}>
+          <p className="text-xs leading-relaxed text-slate-600">
+            <span className="font-semibold text-slate-700">Para explorar →</span>{" "}
+            {NEXT_STEP[diagnosis.riskLevel]}
+          </p>
+        </div>
       </div>
     </section>
   );

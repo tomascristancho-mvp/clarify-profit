@@ -33,23 +33,24 @@ const CONCEPTS = [
 
 export function ConceptExplanations() {
   return (
-    <section aria-labelledby="concepts-heading">
-      <h3
-        id="concepts-heading"
-        className="mb-3 text-lg font-semibold text-slate-800"
-      >
-        Glosario de términos
-      </h3>
-      <dl className="divide-y divide-slate-200 overflow-hidden rounded-lg border border-slate-200">
-        {CONCEPTS.map(({ term, definition }) => (
-          <div key={term} className="px-4 py-3">
-            <dt className="text-sm font-medium text-slate-800">{term}</dt>
-            <dd className="mt-1 text-sm leading-relaxed text-slate-600">
-              {definition}
-            </dd>
-          </div>
-        ))}
-      </dl>
+    <section aria-label="Glosario de términos">
+      <details className="rounded-lg border border-slate-200 bg-white">
+        <summary className="cursor-pointer select-none px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">
+          Glosario de términos
+        </summary>
+        <div className="border-t border-slate-100">
+          <dl className="divide-y divide-slate-100">
+            {CONCEPTS.map(({ term, definition }) => (
+              <div key={term} className="px-4 py-3">
+                <dt className="text-sm font-medium text-slate-800">{term}</dt>
+                <dd className="mt-1 text-sm leading-relaxed text-slate-600">
+                  {definition}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </details>
     </section>
   );
 }
