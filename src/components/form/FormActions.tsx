@@ -8,9 +8,10 @@ export function FormActions({ onLoadExample, onReset }: FormActionsProps) {
     <div className="flex flex-col gap-3 pt-2 sm:flex-row">
       <button
         type="submit"
-        className="flex-1 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-500/25 transition-all duration-200 hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:translate-y-0"
+        className="flex-1 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-600/40 transition-all duration-200 hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-600/50 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:translate-y-0"
       >
-        Calcular
+        Calcular mi negocio
+        <span aria-hidden="true"> →</span>
       </button>
       <button
         type="button"
