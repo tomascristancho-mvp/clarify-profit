@@ -63,7 +63,7 @@ export function ReverseCalculator({ calculation, validatedInputs }: ReverseCalcu
             inputMode="numeric"
             value={rawInput}
             onChange={(e) => setRawInput(e.target.value)}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:max-w-xs"
+            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 sm:max-w-xs"
             placeholder="Ej: 500000"
             aria-describedby="reverse-desc"
           />
@@ -89,7 +89,7 @@ export function ReverseCalculator({ calculation, validatedInputs }: ReverseCalcu
 
         {/* No alcanzable */}
         {result !== null && result.status === "no_alcanzable" && (
-          <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+          <div className="rounded-xl border border-red-200 bg-red-50 p-4">
             <p className="flex items-start gap-2 text-sm text-red-700">
               <span aria-hidden="true" className="mt-0.5 flex-shrink-0 font-bold">
                 ✕
@@ -106,7 +106,7 @@ export function ReverseCalculator({ calculation, validatedInputs }: ReverseCalcu
         {result !== null && result.status === "alcanzable" && targetProfit !== null && (
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-lg bg-indigo-50 p-4">
+              <div className="rounded-lg border border-indigo-100 bg-indigo-50 p-4 shadow-sm">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-indigo-400">
                   Unidades necesarias
                 </p>
@@ -116,7 +116,7 @@ export function ReverseCalculator({ calculation, validatedInputs }: ReverseCalcu
                 <p className="mt-1 text-xs text-indigo-600">unidades al mes</p>
               </div>
 
-              <div className="rounded-lg bg-slate-50 p-4">
+              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 shadow-sm">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
                   Ventas necesarias
                 </p>

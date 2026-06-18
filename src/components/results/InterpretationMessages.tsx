@@ -39,13 +39,13 @@ export function InterpretationMessages({ messages }: InterpretationMessagesProps
       >
         Lectura rápida
       </h3>
-      <ul className="flex flex-col gap-1.5" role="list">
+      <ul className="flex flex-col gap-2" role="list">
         {messages.map((message, index) => {
           const config = TYPE_CONFIG[message.type];
           return (
             <li
               key={index}
-              className={`flex items-start gap-3 rounded border-l-4 bg-white px-3 py-2.5 shadow-sm ${config.borderClass}`}
+              className={`flex items-start gap-3 rounded-lg border-l-4 bg-white px-3 py-3 shadow-sm ${config.borderClass}`}
             >
               <span
                 className={`flex-shrink-0 font-bold ${config.iconClass}`}
