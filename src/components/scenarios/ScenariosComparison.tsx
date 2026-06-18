@@ -119,7 +119,9 @@ export function ScenariosComparison({
         <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
           Utilidad por escenario
         </p>
-        <ScenarioChart scenarios={scenarios} currency={currency} />
+        <div className="mx-auto max-w-xl">
+          <ScenarioChart scenarios={scenarios} currency={currency} />
+        </div>
       </div>
 
       {/* Scenario cards */}

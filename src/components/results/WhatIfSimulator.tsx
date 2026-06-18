@@ -33,7 +33,7 @@ const RISK_BADGE: Record<RiskLevel, { label: string; icon: string; className: st
 
 const GROUP_ORDER: WhatIfVariable[] = ["price", "units", "variableCost", "fixedCosts"];
 
-const GROUP_CONFIG: Record<WhatIfVariable, { heading: string; gridClass: string }> = {
+const GROUP_CONFIG: Record<WhatIfVariable, { heading: string; gridClass: string; containerClass?: string }> = {
   price: {
     heading: "Precio de venta",
     gridClass: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
@@ -45,10 +45,12 @@ const GROUP_CONFIG: Record<WhatIfVariable, { heading: string; gridClass: string 
   variableCost: {
     heading: "Costo variable por unidad",
     gridClass: "grid-cols-1 sm:grid-cols-2",
+    containerClass: "max-w-2xl",
   },
   fixedCosts: {
     heading: "Costos fijos mensuales",
     gridClass: "grid-cols-1 sm:grid-cols-2",
+    containerClass: "max-w-2xl",
   },
 };
 
@@ -238,7 +240,7 @@ export function WhatIfSimulator({ simulations, currency }: WhatIfSimulatorProps)
           const sorted = [...group].sort((a, b) => b.profitDelta - a.profitDelta);
 
           return (
-            <div key={variable}>
+            <div key={variable} className={config.containerClass}>
               <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
                 {config.heading}
               </p>

@@ -25,17 +25,19 @@ export function IndicatorsGrid({ result, currency }: IndicatorsGridProps) {
         <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
           Desglose mensual
         </p>
-        <ProfitBreakdownChart
-          monthlyRevenue={result.monthlyRevenue}
-          totalVariableCosts={result.totalVariableCosts}
-          totalCosts={result.totalCosts}
-          operatingProfit={result.operatingProfit}
-          currency={currency}
-        />
+        <div className="mx-auto max-w-2xl">
+          <ProfitBreakdownChart
+            monthlyRevenue={result.monthlyRevenue}
+            totalVariableCosts={result.totalVariableCosts}
+            totalCosts={result.totalCosts}
+            operatingProfit={result.operatingProfit}
+            currency={currency}
+          />
+        </div>
       </div>
 
       {/* Indicator cards */}
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <IndicatorCard
           title="Margen de contribución"
           result={result.contributionMarginPct}
