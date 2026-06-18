@@ -62,7 +62,7 @@ export function CalculatorApp() {
           <div className="animate-fade-in-up flex flex-col gap-6">
             {/* ── Top dashboard: resultado principal + veredicto ────────────────
                 Side by side on lg+, stacked on mobile.                         */}
-            <div className="grid gap-6 lg:grid-cols-[3fr_2fr]">
+            <div className="grid gap-6 lg:grid-cols-2">
               <section aria-labelledby="results-heading">
                 <h2
                   id="results-heading"
@@ -78,6 +78,12 @@ export function CalculatorApp() {
                 <ResultsSummary
                   operatingProfit={results.calculation.operatingProfit}
                   currency={results.validatedInputs.currency}
+                  riskLevel={results.diagnosis.riskLevel}
+                  breakevenMinUnits={
+                    results.calculation.breakevenUnits.status === "valido"
+                      ? results.calculation.breakevenUnits.value.minimumWholeUnits
+                      : null
+                  }
                 />
               </section>
 
