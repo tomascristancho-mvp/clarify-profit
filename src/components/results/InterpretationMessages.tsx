@@ -37,7 +37,7 @@ export function InterpretationMessages({ messages }: InterpretationMessagesProps
         id="interpretation-heading"
         className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400"
       >
-        Interpretación educativa
+        Lectura rápida
       </h3>
       <ul className="flex flex-col gap-1.5" role="list">
         {messages.map((message, index) => {
@@ -45,7 +45,7 @@ export function InterpretationMessages({ messages }: InterpretationMessagesProps
           return (
             <li
               key={index}
-              className={`flex items-start gap-3 rounded border-l-4 bg-white px-3 py-2.5 ${config.borderClass}`}
+              className={`flex items-start gap-3 rounded border-l-4 bg-white px-3 py-2.5 shadow-sm ${config.borderClass}`}
             >
               <span
                 className={`flex-shrink-0 font-bold ${config.iconClass}`}

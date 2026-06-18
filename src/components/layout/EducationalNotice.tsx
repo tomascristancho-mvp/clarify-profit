@@ -13,6 +13,11 @@ export function EducationalNotice() {
               consulta con un contador o asesor de confianza.
             </strong>
           </p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-400">
+            ¿Tienes preguntas sobre estos resultados? Compártelos con tu contador o asesor
+            de confianza — ellos pueden ayudarte a interpretar las cifras dentro del
+            contexto real de tu negocio.
+          </p>
         </div>
 
         <div className="flex flex-col items-center gap-1 sm:flex-row sm:justify-between">

@@ -54,8 +54,7 @@ const RISK_CONFIG: Record<RiskLevel, RiskConfig> = {
   },
 };
 
-// Purely presentational — does not modify diagnosis logic or invent data.
-// Framed as exploration suggestions, not financial advice or guarantees.
+// Exploration prompts — framed as suggestions, not directives.
 const NEXT_STEP: Record<RiskLevel, string> = {
   bajo:
     "Explora si puedes escalar el volumen de ventas o diversificar fuentes de ingreso manteniendo los costos controlados.",
@@ -67,12 +66,22 @@ const NEXT_STEP: Record<RiskLevel, string> = {
     "Revisa el precio de venta y el costo variable por unidad. Con los valores actuales, cada unidad vendida incrementa la pérdida.",
 };
 
+// Positive reading only when the data genuinely suggests a viable signal.
+// Shown for bajo / medio; omitted for alto / no_viable.
+const STRENGTH_READING: Partial<Record<RiskLevel, string>> = {
+  bajo:
+    "Los datos ingresados sugieren una estructura de costos viable: el margen de contribución muestra capacidad para absorber costos fijos y generar utilidad con el volumen declarado.",
+  medio:
+    "Los datos muestran utilidad con el volumen actual. El margen indica que el negocio puede ser sostenible, aunque el colchón frente a variaciones en ventas o costos es limitado.",
+};
+
 interface ExecutiveDiagnosisProps {
   diagnosis: DiagnosisResult;
 }
 
 export function ExecutiveDiagnosis({ diagnosis }: ExecutiveDiagnosisProps) {
   const config = RISK_CONFIG[diagnosis.riskLevel];
+  const strengthText = STRENGTH_READING[diagnosis.riskLevel];
 
   return (
     <section aria-labelledby="diagnosis-heading">
@@ -80,14 +89,14 @@ export function ExecutiveDiagnosis({ diagnosis }: ExecutiveDiagnosisProps) {
         id="diagnosis-heading"
         className="mb-3 text-lg font-semibold text-slate-800"
       >
-        Diagnóstico ejecutivo
+        Veredicto ejecutivo
       </h3>
 
       {/* overflow-hidden clips the footer strip to the rounded corners */}
       <div
         className={`overflow-hidden rounded-2xl border border-l-4 shadow-sm ${config.bgClass} ${config.borderColor}`}
       >
-        {/* ── Zone 1 & 2: Veredicto, resumen y factor de riesgo ─── */}
+        {/* ── Body: badge + summary + lectura positiva + factor de riesgo ── */}
         <div className="p-5">
           {/* Risk badge */}
           <div className="mb-3 flex items-center gap-2.5">
@@ -111,8 +120,18 @@ export function ExecutiveDiagnosis({ diagnosis }: ExecutiveDiagnosisProps) {
             {diagnosis.summary}
           </p>
 
-          {/* Factor de riesgo principal */}
-          {diagnosis.mainRiskFactor && (
+          {/* Positive reading — only for bajo / medio */}
+          {strengthText !== undefined && (
+            <div className="mt-3 border-t border-black/5 pt-3">
+              <p className="text-xs leading-relaxed text-slate-600">
+                <span className="font-semibold text-slate-700">Lectura positiva: </span>
+                {strengthText}
+              </p>
+            </div>
+          )}
+
+          {/* Risk factor — only when the domain provides one */}
+          {diagnosis.mainRiskFactor !== null && (
             <div className="mt-3 flex items-start gap-2 border-t border-black/5 pt-3">
               <span aria-hidden="true" className="mt-px flex-shrink-0 text-sm opacity-40">
                 ⚠
@@ -125,7 +144,7 @@ export function ExecutiveDiagnosis({ diagnosis }: ExecutiveDiagnosisProps) {
           )}
         </div>
 
-        {/* ── Zone 3: Para explorar ──────────────────────────────── */}
+        {/* ── Footer: Para explorar ──────────────────────────────── */}
         <div className={`border-t border-black/5 px-5 py-3 ${config.footerBg}`}>
           <p className="text-xs leading-relaxed text-slate-600">
             <span className="font-semibold text-slate-700">Para explorar →</span>{" "}

@@ -118,6 +118,13 @@ export function ProfitBreakdownChart({
     `Costos fijos: ${formatCurrency(FC, currency)}. ` +
     `${isLoss ? "Pérdida" : "Utilidad"}: ${formatCurrency(Math.abs(P), currency)}.`;
 
+  // ── Narrative caption (visible text below the chart) ────────────────────────
+  const narrativeText: string = isLoss
+    ? `Los ingresos de ${formatCurrency(R, currency)} no alcanzan a cubrir los costos totales. Los datos indican una pérdida operativa estimada de ${formatCurrency(Math.abs(P), currency)} por período.`
+    : isBreakeven
+    ? `Los ingresos cubren exactamente los costos totales. Los datos indican un punto de equilibrio estimado.`
+    : `Después de cubrir costos variables y fijos, los datos sugieren ${formatCurrency(P, currency)} como utilidad operativa estimada sobre ingresos de ${formatCurrency(R, currency)}.`;
+
   const categoryLabels = [
     { text: "Ingresos",     fill: COLORS.revenue.label },
     { text: "Costos var.",  fill: COLORS.variable.label },
@@ -129,11 +136,12 @@ export function ProfitBreakdownChart({
   ];
 
   return (
-    <figure role="img" aria-label={ariaLabel} className="w-full">
+    <figure className="w-full">
       <svg
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
         width="100%"
-        aria-hidden="true"
+        role="img"
+        aria-label={ariaLabel}
       >
         {/* ── 1. Revenue bar ─────────────────────────────────────── */}
         <rect x={bX(0)} y={revY} width={BAR_W} height={revH} fill={COLORS.revenue.bar} rx={3} />
@@ -210,6 +218,9 @@ export function ProfitBreakdownChart({
           </text>
         ))}
       </svg>
+      <figcaption className="mt-3 text-xs leading-relaxed text-slate-500">
+        {narrativeText}
+      </figcaption>
     </figure>
   );
 }
