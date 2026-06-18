@@ -27,6 +27,7 @@ export function IndicatorsGrid({ result, currency }: IndicatorsGridProps) {
         </p>
         <ProfitBreakdownChart
           monthlyRevenue={result.monthlyRevenue}
+          totalVariableCosts={result.totalVariableCosts}
           totalCosts={result.totalCosts}
           operatingProfit={result.operatingProfit}
           currency={currency}
