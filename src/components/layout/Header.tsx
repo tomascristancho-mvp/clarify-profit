@@ -17,7 +17,7 @@ export function Header() {
         className="pointer-events-none absolute bottom-0 left-10 h-64 w-64 rounded-full bg-violet-500/15 blur-3xl"
       />
 
-      <div className="relative mx-auto max-w-4xl px-4 py-14 sm:px-6 sm:py-20">
+      <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
         <div className="grid items-center gap-10 lg:grid-cols-2">
 
           {/* ── Left column: copy ── */}
@@ -80,7 +80,7 @@ export function Header() {
               aria-hidden="true" — purely visual, no real financial data.
               hidden on mobile to avoid layout saturation.                       */}
           <div aria-hidden="true" className="hidden lg:flex items-center justify-center">
-            <div className="w-full max-w-xs rounded-2xl border border-white/10 bg-white/5 p-5 shadow-2xl shadow-black/30 backdrop-blur-sm">
+            <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-white/5 p-5 shadow-2xl shadow-black/30 backdrop-blur-sm">
 
               {/* Card header */}
               <div className="mb-4 flex items-center justify-between">

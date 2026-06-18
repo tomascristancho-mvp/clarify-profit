@@ -49,7 +49,7 @@ export function ResultsSummary({ operatingProfit, currency }: ResultsSummaryProp
         >
           {icon}
         </span>
-        <p className={`text-5xl font-bold tracking-tight sm:text-6xl ${valueColorClass}`}>
+        <p className={`text-4xl font-bold tracking-tight sm:text-5xl ${valueColorClass}`}>
           {formatCurrency(Math.abs(operatingProfit), currency)}
         </p>
       </div>

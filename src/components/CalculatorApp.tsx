@@ -24,7 +24,7 @@ export function CalculatorApp() {
   } = useCalculatorState();
 
   return (
-    <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
+    <main id="main-content" className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       {/* Announcement region for screen readers */}
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {results
@@ -32,9 +32,13 @@ export function CalculatorApp() {
           : ""}
       </div>
 
-      <div className="flex flex-col gap-10">
-        {/* Form */}
-        <section id="form-section" aria-labelledby="form-heading">
+      <div className="flex flex-col gap-8">
+        {/* Form — centered and width-capped so it doesn't stretch too wide */}
+        <section
+          id="form-section"
+          aria-labelledby="form-heading"
+          className="mx-auto w-full max-w-4xl"
+        >
           <h2
             id="form-heading"
             className="mb-4 text-xl font-semibold text-slate-800"
@@ -55,27 +59,32 @@ export function CalculatorApp() {
 
         {/* Results — rendered only after a successful calculation */}
         {results && (
-          <div className="animate-fade-in-up flex flex-col gap-8">
-            <section aria-labelledby="results-heading">
-              <h2
-                id="results-heading"
-                className="mb-4 text-xl font-semibold text-slate-800"
-              >
-                Resultado principal
-                {results.validatedInputs.businessName && (
-                  <span className="ml-1 text-base font-normal text-slate-500">
-                    {" — "}{results.validatedInputs.businessName}
-                  </span>
-                )}
-              </h2>
-              <ResultsSummary
-                operatingProfit={results.calculation.operatingProfit}
-                currency={results.validatedInputs.currency}
-              />
-            </section>
+          <div className="animate-fade-in-up flex flex-col gap-6">
+            {/* ── Top dashboard: resultado principal + veredicto ────────────────
+                Side by side on lg+, stacked on mobile.                         */}
+            <div className="grid gap-6 lg:grid-cols-[3fr_2fr]">
+              <section aria-labelledby="results-heading">
+                <h2
+                  id="results-heading"
+                  className="mb-4 text-xl font-semibold text-slate-800"
+                >
+                  Resultado principal
+                  {results.validatedInputs.businessName && (
+                    <span className="ml-1 text-base font-normal text-slate-500">
+                      {" — "}{results.validatedInputs.businessName}
+                    </span>
+                  )}
+                </h2>
+                <ResultsSummary
+                  operatingProfit={results.calculation.operatingProfit}
+                  currency={results.validatedInputs.currency}
+                />
+              </section>
 
-            <ExecutiveDiagnosis diagnosis={results.diagnosis} />
+              <ExecutiveDiagnosis diagnosis={results.diagnosis} />
+            </div>
 
+            {/* ── Remaining sections ── */}
             <IndicatorsGrid
               result={results.calculation}
               currency={results.validatedInputs.currency}
