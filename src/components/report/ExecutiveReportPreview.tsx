@@ -3,7 +3,10 @@ import type { DiagnosisResult, RiskLevel } from "@/domain/diagnosis";
 import type { WhatIfSimulation } from "@/domain/whatIf";
 import { formatCurrency } from "@/format/currency";
 import { formatPercentage } from "@/format/percentage";
-import { buildWhatsAppReportUrl } from "@/components/conversion/whatsappReportUrl";
+import {
+  buildWhatsAppReportUrl,
+  type ReportMessageData,
+} from "@/components/conversion/whatsappReportUrl";
 import {
   getMostDangerousVariable,
   getWeeklyBreakevenTarget,
@@ -72,7 +75,41 @@ export function ExecutiveReportPreview({
   simulations,
 }: ExecutiveReportPreviewProps) {
   const riskStyle = RISK_STYLE[diagnosis.riskLevel];
-  const whatsappUrl = buildWhatsAppReportUrl(validatedInputs.businessName);
+
+  const reportData: ReportMessageData = {
+    businessName: validatedInputs.businessName,
+    pricePerUnit: formatCurrency(validatedInputs.pricePerUnit, validatedInputs.currency),
+    estimatedUnits: validatedInputs.estimatedUnits.toLocaleString("es-CO"),
+    monthlyRevenue: formatCurrency(calculation.monthlyRevenue, validatedInputs.currency),
+    fixedCosts: formatCurrency(validatedInputs.fixedCosts, validatedInputs.currency),
+    variableCostPerUnit: formatCurrency(
+      validatedInputs.variableCostPerUnit,
+      validatedInputs.currency
+    ),
+    operatingProfit: formatCurrency(calculation.operatingProfit, validatedInputs.currency),
+    contributionMarginPct:
+      calculation.contributionMarginPct.status === "valido"
+        ? formatPercentage(calculation.contributionMarginPct.value)
+        : "No disponible",
+    breakevenUnits:
+      calculation.breakevenUnits.status === "valido"
+        ? `${calculation.breakevenUnits.value.minimumWholeUnits.toLocaleString("es-CO")} unidades/mes`
+        : "No disponible",
+    monthlyROI:
+      calculation.monthlyROI.status === "valido"
+        ? formatPercentage(calculation.monthlyROI.value)
+        : "No disponible",
+    recoveryTimeMonths:
+      calculation.recoveryTimeMonths.status === "valido"
+        ? `${calculation.recoveryTimeMonths.value.toLocaleString("es-CO", {
+            maximumFractionDigits: 1,
+          })} meses`
+        : "No disponible",
+    riskLevel: riskStyle.label,
+    mainRiskFactor: diagnosis.mainRiskFactor ?? "No identificado",
+  };
+
+  const whatsappUrl = buildWhatsAppReportUrl(reportData);
   const mostDangerous = getMostDangerousVariable(simulations);
 
   const breakevenMinUnits =
