@@ -2,80 +2,138 @@ interface ExecutiveReportTeaserProps {
   businessName?: string;
 }
 
-const REPORT_ITEMS = [
+const REPORT_SECTIONS = [
   {
-    label: "Utilidad mensual",
-    description: "Resultado financiero estimado del mes con tus datos actuales.",
+    number: "01",
+    title: "Resumen ejecutivo de una página",
+    tagline: "Síntesis clara del negocio, utilidad, riesgo y conclusión principal.",
+    color: "bg-indigo-500",
   },
   {
-    label: "Punto de equilibrio",
-    description: "Unidades y ventas mínimas para no operar en pérdida.",
+    number: "02",
+    title: "Diagnóstico de salud financiera",
+    tagline: "Lectura de margen, equilibrio, recuperación y sostenibilidad.",
+    color: "bg-violet-500",
   },
   {
-    label: "Nivel de riesgo",
-    description: "Diagnóstico ejecutivo con los factores que más lo afectan.",
+    number: "03",
+    title: "Plan de acción — 30 días",
+    tagline: "Pasos concretos ordenados por impacto y urgencia.",
+    color: "bg-sky-500",
   },
   {
-    label: "Escenarios",
-    description: "Proyecciones pesimista, esperada y optimista en un vistazo.",
+    number: "04",
+    title: "Variable más peligrosa",
+    tagline: "El factor que más podría afectar la utilidad si cambia.",
+    color: "bg-red-500",
   },
   {
-    label: "Lectura ejecutiva",
-    description: "Resumen en lenguaje claro, listo para compartir con asesores.",
+    number: "05",
+    title: "Mayor oportunidad de mejora",
+    tagline: "La palanca con más potencial para aumentar la utilidad.",
+    color: "bg-emerald-500",
+  },
+  {
+    number: "06",
+    title: "Meta mínima semanal de ventas",
+    tagline: "Traducción del punto de equilibrio a metas prácticas.",
+    color: "bg-amber-500",
+  },
+  {
+    number: "07",
+    title: "Análisis de sensibilidad",
+    tagline: "Cómo cambia el resultado si varían precio, volumen o costos.",
+    color: "bg-teal-500",
+  },
+  {
+    number: "08",
+    title: "Checklist operativo",
+    tagline: "Lista accionable para revisar costos, precios y ventas.",
+    color: "bg-cyan-500",
+  },
+  {
+    number: "09",
+    title: "Gráficas premium adicionales",
+    tagline: "Visualizaciones más claras para compartir y decidir.",
+    color: "bg-orange-500",
+  },
+  {
+    number: "10",
+    title: "Recomendaciones por nivel de riesgo",
+    tagline: "Sugerencias según el diagnóstico financiero del negocio.",
+    color: "bg-rose-500",
   },
 ] as const;
 
 export function ExecutiveReportTeaser({ businessName }: ExecutiveReportTeaserProps) {
-  const nameSuffix = businessName ? ` — ${businessName}` : "";
+  const docTitle = businessName
+    ? `Reporte ejecutivo premium — ${businessName}`
+    : "Reporte ejecutivo premium";
 
   return (
     <section aria-labelledby="report-teaser-heading">
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-slate-200 shadow-sm">
 
-        {/* Header */}
-        <div className="border-b border-slate-100 bg-gradient-to-br from-indigo-50/60 to-white px-6 py-5">
-          <span className="mb-3 inline-block rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-semibold text-indigo-700">
-            Próximamente
-          </span>
+        {/* ── Header: dark, registro premium ── */}
+        <div className="bg-slate-800 px-6 py-6 sm:px-7">
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-indigo-500/20 px-2.5 py-0.5 text-xs font-semibold text-indigo-300 ring-1 ring-indigo-400/30">
+              Próximamente
+            </span>
+            <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-semibold text-white/60 ring-1 ring-white/15">
+              En validación
+            </span>
+          </div>
+
           <h3
             id="report-teaser-heading"
-            className="text-lg font-semibold text-slate-800"
+            className="text-xl font-bold tracking-tight text-white"
           >
-            Convierte este análisis en un reporte ejecutivo{nameSuffix}
+            {docTitle}
           </h3>
-          <p className="mt-1.5 max-w-prose text-sm leading-relaxed text-slate-500">
-            Próximamente podrás generar un resumen claro basado en este análisis.
-            Ideal para compartir con socios, contador o asesor antes de tomar
-            decisiones.
+
+          <p className="mt-2 max-w-prose text-sm leading-relaxed text-slate-400">
+            La calculadora te muestra los números. El reporte te explica qué
+            significan y qué hacer con ellos — en lenguaje claro, listo para
+            compartir con socios, contador o asesor.
           </p>
         </div>
 
-        {/* Report items */}
-        <div className="px-6 py-5">
+        {/* ── 10 módulos en grilla responsive ── */}
+        <div className="bg-white px-5 py-5 sm:px-6">
           <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-slate-400">
-            El reporte incluiría
+            El reporte premium incluiría
           </p>
-          <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" role="list">
-            {REPORT_ITEMS.map((item, index) => (
-              <li key={item.label} className="flex items-start gap-3">
-                <span
-                  className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-600"
-                  aria-hidden="true"
-                >
-                  {index + 1}
-                </span>
-                <div className="min-w-0">
-                  <p className="text-sm font-medium text-slate-700">{item.label}</p>
-                  <p className="mt-0.5 text-xs leading-relaxed text-slate-400">
-                    {item.description}
+
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
+            {REPORT_SECTIONS.map((section) => (
+              <div
+                key={section.number}
+                className="overflow-hidden rounded-lg border border-slate-100 bg-slate-50"
+              >
+                <div className={`h-0.5 w-full ${section.color}`} aria-hidden="true" />
+                <div className="p-3">
+                  <p className="mb-1 flex items-baseline gap-1.5">
+                    <span
+                      className="flex-shrink-0 font-mono text-xs font-bold text-slate-300"
+                      aria-hidden="true"
+                    >
+                      {section.number}
+                    </span>
+                    <span className="text-xs font-semibold leading-snug text-slate-700">
+                      {section.title}
+                    </span>
+                  </p>
+                  <p className="text-xs leading-relaxed text-slate-500">
+                    {section.tagline}
                   </p>
                 </div>
-              </li>
+              </div>
             ))}
-          </ol>
+          </div>
         </div>
 
-        {/* CTA footer */}
+        {/* ── CTA footer ── */}
         <div className="border-t border-slate-100 bg-slate-50/60 px-6 py-4">
           <button
             type="button"
