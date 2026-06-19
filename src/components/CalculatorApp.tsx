@@ -12,6 +12,7 @@ import { ExecutiveDiagnosis } from "@/components/results/ExecutiveDiagnosis";
 import { WhatIfSimulator } from "@/components/results/WhatIfSimulator";
 import { ReverseCalculator } from "@/components/results/ReverseCalculator";
 import { ExecutiveReportTeaser } from "@/components/conversion/ExecutiveReportTeaser";
+import { ReportMiniCta } from "@/components/conversion/ReportMiniCta";
 
 export function CalculatorApp() {
   const {
@@ -90,6 +91,9 @@ export function CalculatorApp() {
 
               <ExecutiveDiagnosis diagnosis={results.diagnosis} />
             </div>
+
+            {/* ── Mini CTA: reporte premium — aparece antes de los indicadores ── */}
+            <ReportMiniCta />
 
             {/* ── Remaining sections ── */}
             <IndicatorsGrid
