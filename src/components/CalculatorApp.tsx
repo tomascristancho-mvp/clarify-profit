@@ -11,8 +11,8 @@ import { MethodologyNote } from "@/components/shared/MethodologyNote";
 import { ExecutiveDiagnosis } from "@/components/results/ExecutiveDiagnosis";
 import { WhatIfSimulator } from "@/components/results/WhatIfSimulator";
 import { ReverseCalculator } from "@/components/results/ReverseCalculator";
-import { ExecutiveReportTeaser } from "@/components/conversion/ExecutiveReportTeaser";
 import { ReportMiniCta } from "@/components/conversion/ReportMiniCta";
+import { ExecutiveReportPreview } from "@/components/report/ExecutiveReportPreview";
 
 export function CalculatorApp() {
   const {
@@ -118,8 +118,11 @@ export function CalculatorApp() {
               currency={results.validatedInputs.currency}
             />
 
-            <ExecutiveReportTeaser
-              businessName={results.validatedInputs.businessName}
+            <ExecutiveReportPreview
+              validatedInputs={results.validatedInputs}
+              calculation={results.calculation}
+              diagnosis={results.diagnosis}
+              simulations={results.simulations}
             />
 
             <MethodologyNote />
