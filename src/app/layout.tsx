@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   applicationName: "Negocio Claro",
+  authors: [{ name: "AI Health Colombia" }],
+  creator: "AI Health Colombia",
   openGraph: {
     type: "website",
     locale: "es_CO",

@@ -20,10 +20,16 @@ export function EducationalNotice() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center gap-1 sm:flex-row sm:justify-between">
-          <p className="text-sm font-semibold text-white">Negocio Claro</p>
+        <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-between">
+          <div className="flex flex-col items-center gap-0.5 sm:items-start">
+            <p className="text-sm font-semibold text-white">Negocio Claro</p>
+            <p className="text-xs text-slate-500">
+              Un producto de{" "}
+              <span className="font-medium text-slate-400">AI Health Colombia</span>
+            </p>
+          </div>
           <p className="text-xs text-slate-500">
-            Herramienta educativa gratuita para emprendedores
+            Herramienta educativa gratuita para emprendedores · Hecho en Colombia
           </p>
         </div>
       </div>
