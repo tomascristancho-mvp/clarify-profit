@@ -1,4 +1,5 @@
 import { Header } from "@/components/layout/Header";
+import { HowItWorks } from "@/components/layout/HowItWorks";
 import { EducationalNotice } from "@/components/layout/EducationalNotice";
 import { CalculatorApp } from "@/components/CalculatorApp";
 
@@ -33,6 +34,7 @@ export default function Page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />
       <Header />
+      <HowItWorks />
       <CalculatorApp />
       <EducationalNotice />
     </>
