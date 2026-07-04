@@ -28,19 +28,13 @@ export interface CalculatorResults {
   simulations: WhatIfSimulation[];
 }
 
-function runCalculation(inputs: FormInputs): CalculatorResults | null {
-  const validation = validateInputs(inputs);
-  if (!validation.valid) return null;
-  const calculation = calcular(validation.data);
-  const scenarios = calcularEscenarios(validation.data);
-  const interpretations = generarInterpretaciones(
-    validation.data,
-    calculation,
-    scenarios
-  );
-  const diagnosis = diagnosticarNegocio(validation.data, calculation, scenarios);
-  const simulations = simularCambios(validation.data, calculation);
-  return { validatedInputs: validation.data, calculation, scenarios, interpretations, diagnosis, simulations };
+function computeResults(data: ValidatedInputs): CalculatorResults {
+  const calculation = calcular(data);
+  const scenarios = calcularEscenarios(data);
+  const interpretations = generarInterpretaciones(data, calculation, scenarios);
+  const diagnosis = diagnosticarNegocio(data, calculation, scenarios);
+  const simulations = simularCambios(data, calculation);
+  return { validatedInputs: data, calculation, scenarios, interpretations, diagnosis, simulations };
 }
 
 export function useCalculatorState() {
@@ -68,22 +62,14 @@ export function useCalculatorState() {
       return;
     }
     setErrors({});
-    const calculation = calcular(validation.data);
-    const scenarios = calcularEscenarios(validation.data);
-    const interpretations = generarInterpretaciones(
-      validation.data,
-      calculation,
-      scenarios
-    );
-    const diagnosis = diagnosticarNegocio(validation.data, calculation, scenarios);
-    const simulations = simularCambios(validation.data, calculation);
-    setResults({ validatedInputs: validation.data, calculation, scenarios, interpretations, diagnosis, simulations });
+    setResults(computeResults(validation.data));
   }, [inputs]);
 
   const handleLoadExample = useCallback(() => {
     setInputs(EXAMPLE_FORM_INPUTS);
     setErrors({});
-    setResults(runCalculation(EXAMPLE_FORM_INPUTS));
+    const validation = validateInputs(EXAMPLE_FORM_INPUTS);
+    setResults(validation.valid ? computeResults(validation.data) : null);
   }, []);
 
   const handleReset = useCallback(() => {

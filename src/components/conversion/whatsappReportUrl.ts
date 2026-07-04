@@ -16,8 +16,8 @@ export interface ReportMessageData {
   mainRiskFactor: string;
 }
 
-function buildEnrichedMessage(data: ReportMessageData): string {
-  return [
+export function buildWhatsAppReportUrl(data: ReportMessageData): string {
+  const message = [
     "Hola, quiero solicitar el reporte ejecutivo premium de Negocio Claro.",
     "",
     `Negocio: ${data.businessName || "(sin nombre)"}`,
@@ -43,30 +43,6 @@ function buildEnrichedMessage(data: ReportMessageData): string {
     "",
     "Quisiera saber cómo pagar y recibir el reporte.",
   ].join("\n");
-}
 
-function buildSimpleMessage(businessName?: string): string {
-  const negocioLine = businessName
-    ? `Negocio: ${businessName}`
-    : "Negocio: (sin nombre)";
-  return [
-    "Hola, quiero solicitar el reporte ejecutivo premium de Negocio Claro.",
-    "",
-    negocioLine,
-    "Precio piloto: $9.900 COP.",
-    "",
-    "Quisiera saber cómo recibirlo.",
-  ].join("\n");
-}
-
-// Overload 1: enriched message with full financial data (used by ExecutiveReportPreview)
-export function buildWhatsAppReportUrl(data: ReportMessageData): string;
-// Overload 2: simple message with business name only (legacy, used by ExecutiveReportTeaser)
-export function buildWhatsAppReportUrl(businessName?: string): string;
-export function buildWhatsAppReportUrl(arg?: ReportMessageData | string): string {
-  const message =
-    typeof arg === "object" && arg !== null
-      ? buildEnrichedMessage(arg)
-      : buildSimpleMessage(arg);
   return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
 }

@@ -1,35 +1,12 @@
 import type { WhatIfSimulation } from "@/domain/whatIf";
 import type { CurrencyCode } from "@/config/currencies";
-import type { RiskLevel } from "@/domain/diagnosis";
 import { formatCurrency } from "@/format/currency";
+import { RISK_THEME } from "@/components/shared/riskTheme";
 
 interface WhatIfSimulatorProps {
   simulations: WhatIfSimulation[];
   currency: CurrencyCode;
 }
-
-const RISK_BADGE: Record<RiskLevel, { label: string; icon: string; className: string }> = {
-  bajo: {
-    label: "Bajo riesgo",
-    icon: "✓",
-    className: "text-emerald-700 bg-emerald-50 border-emerald-200",
-  },
-  medio: {
-    label: "Riesgo moderado",
-    icon: "!",
-    className: "text-amber-700 bg-amber-50 border-amber-200",
-  },
-  alto: {
-    label: "Riesgo alto",
-    icon: "⚠",
-    className: "text-orange-700 bg-orange-50 border-orange-200",
-  },
-  no_viable: {
-    label: "No viable",
-    icon: "✕",
-    className: "text-red-700 bg-red-50 border-red-200",
-  },
-};
 
 // ── Insight chip (best / worst) ────────────────────────────────────────────
 
@@ -60,7 +37,7 @@ interface InsightChipProps {
 
 function InsightChip({ variant, simulation, currency }: InsightChipProps) {
   const style = INSIGHT_STYLE[variant];
-  const badge = RISK_BADGE[simulation.riskLevel];
+  const badge = RISK_THEME[simulation.riskLevel];
   const isNeg = simulation.profitDelta < 0;
   const sign = simulation.profitDelta > 0 ? "+" : isNeg ? "−" : "";
 
@@ -79,7 +56,7 @@ function InsightChip({ variant, simulation, currency }: InsightChipProps) {
         {sign}{formatCurrency(Math.abs(simulation.profitDelta), currency)} vs. actual
       </p>
       <span
-        className={`inline-flex items-center gap-0.5 rounded-full border px-1.5 py-0.5 text-xs font-medium ${badge.className}`}
+        className={`inline-flex items-center gap-0.5 rounded-full border px-1.5 py-0.5 text-xs font-medium ${badge.softBadgeClass}`}
       >
         <span aria-hidden="true">{badge.icon}</span>
         {badge.label}

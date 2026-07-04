@@ -1,5 +1,5 @@
 import type { ValidatedInputs, CalculationResult } from "@/domain/types";
-import type { DiagnosisResult, RiskLevel } from "@/domain/diagnosis";
+import type { DiagnosisResult } from "@/domain/diagnosis";
 import type { WhatIfSimulation } from "@/domain/whatIf";
 import { formatCurrency } from "@/format/currency";
 import { formatPercentage } from "@/format/percentage";
@@ -11,6 +11,8 @@ import {
   getMostDangerousVariable,
   getWeeklyBreakevenTarget,
 } from "@/components/report/reportInsights";
+import { RISK_THEME } from "@/components/shared/riskTheme";
+import { PAYMENT_LINK_URL } from "@/components/conversion/paymentLink";
 
 interface ExecutiveReportPreviewProps {
   validatedInputs: ValidatedInputs;
@@ -19,32 +21,23 @@ interface ExecutiveReportPreviewProps {
   simulations: WhatIfSimulation[];
 }
 
-const RISK_STYLE: Record<
-  RiskLevel,
-  { border: string; badge: string; label: string }
-> = {
-  bajo: { border: "border-emerald-200", badge: "bg-emerald-100 text-emerald-800", label: "Bajo riesgo" },
-  medio: { border: "border-amber-200", badge: "bg-amber-100 text-amber-800", label: "Riesgo moderado" },
-  alto: { border: "border-orange-200", badge: "bg-orange-100 text-orange-800", label: "Riesgo alto" },
-  no_viable: { border: "border-red-200", badge: "bg-red-100 text-red-800", label: "No viable" },
-};
-
 // ── Locked section ───────────────────────────────────────────────────────────
 
 function LockedSection({ title, hint }: { title: string; hint: string }) {
   return (
     <div className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
-      {/* Placeholder bars — blurred, not readable */}
+      {/* Placeholder bars — blurred background layer; the card grows with the
+          real text content so nothing gets clipped on narrow screens. */}
       <div
-        className="pointer-events-none select-none space-y-1.5 p-3 opacity-20 blur-sm"
+        className="pointer-events-none absolute inset-0 select-none space-y-1.5 p-3 opacity-20 blur-sm"
         aria-hidden="true"
       >
         {["w-full", "w-4/5", "w-3/5"].map((w, i) => (
           <div key={i} className={`h-2 rounded-full bg-slate-500 ${w}`} />
         ))}
       </div>
-      {/* Lock overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-slate-50/90 p-3 text-center">
+      {/* Lock content — in normal flow, defines the card height */}
+      <div className="relative flex flex-col items-center justify-center gap-1 bg-slate-50/90 p-3 text-center">
         <p className="text-[11px] font-bold leading-tight text-slate-700">{title}</p>
         <p className="text-[10px] leading-tight text-slate-500">{hint}</p>
         <span className="mt-0.5 text-[10px] font-semibold text-indigo-600">
@@ -74,7 +67,7 @@ export function ExecutiveReportPreview({
   diagnosis,
   simulations,
 }: ExecutiveReportPreviewProps) {
-  const riskStyle = RISK_STYLE[diagnosis.riskLevel];
+  const riskStyle = RISK_THEME[diagnosis.riskLevel];
 
   const reportData: ReportMessageData = {
     businessName: validatedInputs.businessName,
@@ -220,10 +213,10 @@ export function ExecutiveReportPreview({
           <p className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
             Diagnóstico
           </p>
-          <div className={`rounded-lg border p-3 ${riskStyle.border}`}>
+          <div className={`rounded-lg border p-3 ${riskStyle.borderClass}`}>
             <div className="mb-1.5 flex flex-wrap items-center gap-1.5">
               <span
-                className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${riskStyle.badge}`}
+                className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${riskStyle.badgeClass}`}
               >
                 {riskStyle.label}
               </span>
@@ -321,6 +314,16 @@ export function ExecutiveReportPreview({
               <WhatsAppIcon />
               Solicitar reporte completo
             </a>
+            {PAYMENT_LINK_URL !== "" && (
+              <a
+                href={PAYMENT_LINK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Pagar online
+              </a>
+            )}
             <p className="text-[10px] leading-relaxed text-slate-400">
               <strong className="text-slate-500">$9.900 COP</strong> · Versión
               piloto · Sin registro obligatorio

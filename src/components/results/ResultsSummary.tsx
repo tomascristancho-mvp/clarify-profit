@@ -1,6 +1,7 @@
 import type { CurrencyCode } from "@/config/currencies";
 import type { RiskLevel } from "@/domain/diagnosis";
 import { formatCurrency } from "@/format/currency";
+import { RISK_THEME } from "@/components/shared/riskTheme";
 
 interface ResultsSummaryProps {
   operatingProfit: number;
@@ -8,29 +9,6 @@ interface ResultsSummaryProps {
   riskLevel: RiskLevel;
   breakevenMinUnits: number | null;
 }
-
-const RISK_CHIP: Record<RiskLevel, { label: string; icon: string; chipClass: string }> = {
-  bajo: {
-    label: "Bajo riesgo",
-    icon: "✓",
-    chipClass: "bg-emerald-100 text-emerald-800 ring-emerald-200",
-  },
-  medio: {
-    label: "Riesgo moderado",
-    icon: "!",
-    chipClass: "bg-amber-100 text-amber-800 ring-amber-200",
-  },
-  alto: {
-    label: "Riesgo alto",
-    icon: "⚠",
-    chipClass: "bg-orange-100 text-orange-800 ring-orange-200",
-  },
-  no_viable: {
-    label: "No viable",
-    icon: "✕",
-    chipClass: "bg-red-100 text-red-800 ring-red-200",
-  },
-};
 
 export function ResultsSummary({
   operatingProfit,
@@ -67,7 +45,7 @@ export function ResultsSummary({
 
   const icon = isProfitable ? "▲" : isBreakeven ? "=" : "▼";
 
-  const chip = RISK_CHIP[riskLevel];
+  const chip = RISK_THEME[riskLevel];
 
   return (
     <div
@@ -108,7 +86,7 @@ export function ResultsSummary({
       {/* Mini-KPI strip */}
       <div className="flex flex-wrap items-center gap-3 border-t border-black/5 px-6 py-3">
         <span
-          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${chip.chipClass}`}
+          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${chip.badgeClass}`}
         >
           <span aria-hidden="true">{chip.icon}</span>
           {chip.label}
