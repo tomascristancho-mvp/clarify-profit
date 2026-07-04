@@ -7,10 +7,29 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://clarify-profit.vercel.app";
+const SITE_TITLE = "Negocio Claro — Calculadora de rentabilidad";
+const SITE_DESCRIPTION =
+  "Descubre cuánto necesitas vender, cuánto podrías ganar y en cuánto tiempo recuperarías tu inversión. Herramienta educativa gratuita para emprendedores.";
+
 export const metadata: Metadata = {
-  title: "Negocio Claro — Calculadora de rentabilidad",
-  description:
-    "Descubre cuánto necesitas vender, cuánto podrías ganar y en cuánto tiempo recuperarías tu inversión. Herramienta educativa gratuita para emprendedores.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  applicationName: "Negocio Claro",
+  openGraph: {
+    type: "website",
+    locale: "es_CO",
+    url: SITE_URL,
+    siteName: "Negocio Claro",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({

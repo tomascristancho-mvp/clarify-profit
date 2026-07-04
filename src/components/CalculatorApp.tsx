@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useCalculatorState } from "@/hooks/useCalculatorState";
 import { CalculatorForm } from "@/components/form/CalculatorForm";
 import { ResultsSummary } from "@/components/results/ResultsSummary";
@@ -13,6 +14,8 @@ import { WhatIfSimulator } from "@/components/results/WhatIfSimulator";
 import { ReverseCalculator } from "@/components/results/ReverseCalculator";
 import { ReportMiniCta } from "@/components/conversion/ReportMiniCta";
 import { ExecutiveReportPreview } from "@/components/report/ExecutiveReportPreview";
+import { StickyReportCta } from "@/components/conversion/StickyReportCta";
+import { ShareButton } from "@/components/shared/ShareButton";
 
 export function CalculatorApp() {
   const {
@@ -24,6 +27,20 @@ export function CalculatorApp() {
     handleLoadExample,
     handleReset,
   } = useCalculatorState();
+
+  // Scroll to the results when a calculation completes — on mobile the form
+  // fills the screen and users don't realize the results rendered below.
+  const resultsRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!results) return;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    resultsRef.current?.scrollIntoView({
+      behavior: reducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  }, [results]);
 
   return (
     <main id="main-content" className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
@@ -61,22 +78,28 @@ export function CalculatorApp() {
 
         {/* Results — rendered only after a successful calculation */}
         {results && (
-          <div className="animate-fade-in-up flex flex-col gap-6">
+          <div
+            ref={resultsRef}
+            className="animate-fade-in-up flex flex-col gap-6 scroll-mt-6 pb-14 sm:pb-0"
+          >
             {/* ── Top dashboard: resultado principal + veredicto ────────────────
                 Side by side on lg+, stacked on mobile.                         */}
             <div className="grid gap-6 lg:grid-cols-2">
               <section aria-labelledby="results-heading">
-                <h2
-                  id="results-heading"
-                  className="mb-4 text-xl font-semibold text-slate-800"
-                >
-                  Resultado principal
-                  {results.validatedInputs.businessName && (
-                    <span className="ml-1 text-base font-normal text-slate-500">
-                      {" — "}{results.validatedInputs.businessName}
-                    </span>
-                  )}
-                </h2>
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                  <h2
+                    id="results-heading"
+                    className="text-xl font-semibold text-slate-800"
+                  >
+                    Resultado principal
+                    {results.validatedInputs.businessName && (
+                      <span className="ml-1 text-base font-normal text-slate-500">
+                        {" — "}{results.validatedInputs.businessName}
+                      </span>
+                    )}
+                  </h2>
+                  <ShareButton />
+                </div>
                 <ResultsSummary
                   operatingProfit={results.calculation.operatingProfit}
                   currency={results.validatedInputs.currency}
@@ -128,6 +151,9 @@ export function CalculatorApp() {
             <MethodologyNote />
 
             <ConceptExplanations />
+
+            {/* Mobile-only floating CTA — fixed, so DOM position is irrelevant */}
+            <StickyReportCta />
           </div>
         )}
       </div>
