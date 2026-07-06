@@ -39,7 +39,7 @@ export function FormField({
       </label>
 
       {hint && (
-        <p id={hintId} className="text-xs text-slate-400 dark:text-slate-500">
+        <p id={hintId} className="text-xs text-slate-400 dark:text-slate-400">
           {hint}
         </p>
       )}

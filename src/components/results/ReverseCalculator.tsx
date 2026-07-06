@@ -73,7 +73,7 @@ export function ReverseCalculator({ calculation, validatedInputs }: ReverseCalcu
                 {inputError}
               </p>
             ) : (
-              <p className="text-xs text-slate-400 dark:text-slate-500">
+              <p className="text-xs text-slate-400 dark:text-slate-400">
                 Ingresa el valor en {currency}. Usa 0 para calcular el punto de equilibrio.
               </p>
             )}
@@ -82,7 +82,7 @@ export function ReverseCalculator({ calculation, validatedInputs }: ReverseCalcu
 
         {/* Empty state */}
         {!hasInput && (
-          <p className="text-sm text-slate-400 dark:text-slate-500">
+          <p className="text-sm text-slate-400 dark:text-slate-400">
             Ingresa una meta para ver qué necesitas vender.
           </p>
         )}

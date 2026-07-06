@@ -146,7 +146,7 @@ export function ExecutiveReportPreview({
               </span>
             </div>
           </div>
-          <p className="mt-0.5 text-[10px] text-slate-500">{today}</p>
+          <p className="mt-0.5 text-[10px] text-slate-400">{today}</p>
         </div>
 
         {/* ── Métricas clave ──────────────────────────────────────── */}
@@ -324,7 +324,7 @@ export function ExecutiveReportPreview({
                 Pagar online
               </a>
             )}
-            <p className="text-[10px] leading-relaxed text-slate-400 dark:text-slate-500">
+            <p className="text-[10px] leading-relaxed text-slate-400 dark:text-slate-400">
               <strong className="text-slate-500 dark:text-slate-400">$9.900 COP</strong> · Versión
               piloto · Sin registro obligatorio
             </p>

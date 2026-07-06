@@ -40,6 +40,25 @@ body {
   outline-offset: 2px;
 }
 
+/* Indigo-600 fails 3:1 against the dark background — use indigo-400 instead */
+html.dark :focus-visible {
+  outline-color: #818cf8;
+}
+
+/* Smooth cross-fade while switching themes. The class is added by ThemeToggle
+   just before flipping .dark and removed ~300ms later, so normal hover
+   transitions are unaffected. Declared before the reduced-motion block so
+   users who prefer reduced motion still get an instant switch. */
+html.theme-transition,
+html.theme-transition * {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    fill 0.25s ease,
+    stroke 0.25s ease !important;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

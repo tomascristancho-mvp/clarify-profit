@@ -166,7 +166,7 @@ export function ScenariosComparison({
 
         {/* Footer: disclaimer */}
         <div className="border-t border-slate-100 bg-slate-50/60 px-5 py-3 dark:border-slate-800 dark:bg-slate-800/40">
-          <p className="text-xs leading-relaxed text-slate-400 dark:text-slate-500">
+          <p className="text-xs leading-relaxed text-slate-400 dark:text-slate-400">
             Los escenarios ajustan únicamente las unidades vendidas. Los costos fijos
             y la inversión se mantienen constantes.
           </p>

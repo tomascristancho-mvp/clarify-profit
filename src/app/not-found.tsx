@@ -20,7 +20,7 @@ export default function NotFound() {
         Ir a la calculadora
         <span aria-hidden="true">→</span>
       </Link>
-      <p className="mt-10 text-xs text-white/40">
+      <p className="mt-10 text-xs text-white/60">
         Negocio Claro · Un producto de AI Health Colombia
       </p>
     </main>

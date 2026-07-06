@@ -27,7 +27,11 @@ export function ThemeToggle() {
 
   const toggle = () => {
     const next = !isDark;
-    document.documentElement.classList.toggle("dark", next);
+    const root = document.documentElement;
+    // Cross-fade both themes; the CSS rule is skipped under prefers-reduced-motion
+    root.classList.add("theme-transition");
+    root.classList.toggle("dark", next);
+    window.setTimeout(() => root.classList.remove("theme-transition"), 300);
     try {
       localStorage.setItem("theme", next ? "dark" : "light");
     } catch {
