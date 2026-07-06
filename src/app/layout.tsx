@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 
@@ -34,6 +34,14 @@ export const metadata: Metadata = {
   },
 };
 
+// Browser chrome (address bar, status bar) matches the active theme.
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f7fb" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b1120" },
+  ],
+};
+
 // Applies the saved (or system) theme before first paint to avoid a flash
 // of the wrong mode. Must be inline and synchronous — do not move to a module.
 const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}})()`;
@@ -53,6 +61,10 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body className="flex min-h-full flex-col font-sans text-slate-900 dark:text-slate-100">
+        {/* Keyboard users can jump straight to the calculator (WCAG 2.4.1) */}
+        <a href="#main-content" className="skip-link">
+          Saltar al contenido principal
+        </a>
         {children}
       </body>
     </html>

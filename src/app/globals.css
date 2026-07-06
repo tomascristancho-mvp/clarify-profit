@@ -45,6 +45,38 @@ html.dark :focus-visible {
   outline-color: #818cf8;
 }
 
+/* Skip link: visually hidden until focused via keyboard (WCAG 2.4.1).
+   Plain CSS because Tailwind 4 parses `focus:not-sr-only` as a `not-` variant. */
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link:focus {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 50;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  overflow: visible;
+  clip-path: none;
+  border-radius: 0.5rem;
+  background-color: #4f46e5;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.25);
+}
+
 /* Smooth cross-fade while switching themes. The class is added by ThemeToggle
    just before flipping .dark and removed ~300ms later, so normal hover
    transitions are unaffected. Declared before the reduced-motion block so
