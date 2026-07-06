@@ -44,17 +44,17 @@ export function ReverseCalculator({ calculation, validatedInputs }: ReverseCalcu
 
   return (
     <section aria-labelledby="reverse-heading">
-      <h3 id="reverse-heading" className="mb-1 text-lg font-semibold text-slate-800">
+      <h3 id="reverse-heading" className="mb-1 text-lg font-semibold text-slate-800 dark:text-slate-100">
         Calculadora inversa
       </h3>
-      <p className="mb-4 text-sm text-slate-500">
+      <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
         Define una meta de utilidad mensual y descubre cuánto necesitas vender para alcanzarla.
       </p>
 
-      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
         {/* Input field */}
         <div className="mb-5">
-          <label htmlFor="target-profit" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="target-profit" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-200">
             Quiero ganar al mes
           </label>
           <input
@@ -63,17 +63,17 @@ export function ReverseCalculator({ calculation, validatedInputs }: ReverseCalcu
             inputMode="numeric"
             value={rawInput}
             onChange={(e) => setRawInput(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 sm:max-w-xs"
+            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 sm:max-w-xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500"
             placeholder="Ej: 500000"
             aria-describedby="reverse-desc"
           />
           <div id="reverse-desc" className="mt-1 min-h-[1.25rem]">
             {inputError ? (
-              <p role="alert" className="text-xs text-red-600">
+              <p role="alert" className="text-xs text-red-600 dark:text-red-400">
                 {inputError}
               </p>
             ) : (
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-400 dark:text-slate-500">
                 Ingresa el valor en {currency}. Usa 0 para calcular el punto de equilibrio.
               </p>
             )}
@@ -82,15 +82,15 @@ export function ReverseCalculator({ calculation, validatedInputs }: ReverseCalcu
 
         {/* Empty state */}
         {!hasInput && (
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-400 dark:text-slate-500">
             Ingresa una meta para ver qué necesitas vender.
           </p>
         )}
 
         {/* No alcanzable */}
         {result !== null && result.status === "no_alcanzable" && (
-          <div className="rounded-xl border border-red-200 bg-red-50 p-4">
-            <p className="flex items-start gap-2 text-sm text-red-700">
+          <div className="rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950/40">
+            <p className="flex items-start gap-2 text-sm text-red-700 dark:text-red-300">
               <span aria-hidden="true" className="mt-0.5 flex-shrink-0 font-bold">
                 ✕
               </span>
@@ -106,28 +106,28 @@ export function ReverseCalculator({ calculation, validatedInputs }: ReverseCalcu
         {result !== null && result.status === "alcanzable" && targetProfit !== null && (
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-lg border border-indigo-100 bg-indigo-50 p-4 shadow-sm">
+              <div className="rounded-lg border border-indigo-100 bg-indigo-50 p-4 shadow-sm dark:border-indigo-900 dark:bg-indigo-950/40">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-indigo-400">
                   Unidades necesarias
                 </p>
-                <p className="text-2xl font-bold text-indigo-800">
+                <p className="text-2xl font-bold text-indigo-800 dark:text-indigo-300">
                   {result.unitsNeeded.toLocaleString("es-CO")}
                 </p>
-                <p className="mt-1 text-xs text-indigo-600">unidades al mes</p>
+                <p className="mt-1 text-xs text-indigo-600 dark:text-indigo-400">unidades al mes</p>
               </div>
 
-              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 shadow-sm">
+              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800/60">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
                   Ventas necesarias
                 </p>
-                <p className="text-2xl font-bold text-slate-800">
+                <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">
                   {formatCurrency(result.revenueNeeded, currency)}
                 </p>
-                <p className="mt-1 text-xs text-slate-500">en ingresos al mes</p>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">en ingresos al mes</p>
               </div>
             </div>
 
-            <p className="text-sm leading-relaxed text-slate-600">
+            <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
               {targetProfit === 0
                 ? `Para cubrir todos tus costos sin ganar ni perder (punto de equilibrio) necesitas vender al menos ${result.unitsNeeded.toLocaleString("es-CO")} unidades al mes.`
                 : `Para alcanzar una utilidad de ${formatCurrency(targetProfit, currency)} al mes necesitas vender al menos ${result.unitsNeeded.toLocaleString("es-CO")} unidades, lo que equivale a ingresos de ${formatCurrency(result.revenueNeeded, currency)}.`}

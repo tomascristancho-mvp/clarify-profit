@@ -26,16 +26,16 @@ export function ResultsSummary({
       : "border-l-red-500";
 
   const bgClass = isProfitable
-    ? "bg-gradient-to-br from-emerald-50 to-white border-emerald-100"
+    ? "bg-gradient-to-br from-emerald-50 to-white border-emerald-100 dark:from-emerald-950/40 dark:to-slate-900 dark:border-emerald-900"
     : isBreakeven
-      ? "bg-gradient-to-br from-slate-50 to-white border-slate-200"
-      : "bg-gradient-to-br from-red-50 to-white border-red-100";
+      ? "bg-gradient-to-br from-slate-50 to-white border-slate-200 dark:from-slate-800/60 dark:to-slate-900 dark:border-slate-700"
+      : "bg-gradient-to-br from-red-50 to-white border-red-100 dark:from-red-950/40 dark:to-slate-900 dark:border-red-900";
 
   const valueColorClass = isProfitable
-    ? "text-emerald-700"
+    ? "text-emerald-700 dark:text-emerald-400"
     : isBreakeven
-      ? "text-slate-700"
-      : "text-red-700";
+      ? "text-slate-700 dark:text-slate-300"
+      : "text-red-700 dark:text-red-400";
 
   const label = isProfitable
     ? "Utilidad operativa mensual estimada"
@@ -53,7 +53,7 @@ export function ResultsSummary({
     >
       {/* Main KPI */}
       <div className="p-6">
-        <p className="mb-2 text-sm font-medium text-slate-500">{label}</p>
+        <p className="mb-2 text-sm font-medium text-slate-500 dark:text-slate-400">{label}</p>
 
         <div className="flex items-baseline gap-3">
           <span className={`text-xl font-bold ${valueColorClass}`} aria-hidden="true">
@@ -65,26 +65,26 @@ export function ResultsSummary({
         </div>
 
         {isProfitable && (
-          <p className="mt-3 text-sm text-emerald-700/80">
+          <p className="mt-3 text-sm text-emerald-700/80 dark:text-emerald-400/80">
             Antes de impuestos y costos no incluidos en el formulario.
           </p>
         )}
         {!isProfitable && !isBreakeven && (
-          <p className="mt-3 text-sm text-red-600/80">
+          <p className="mt-3 text-sm text-red-600/80 dark:text-red-400/80">
             El negocio pierde{" "}
             <strong>{formatCurrency(Math.abs(operatingProfit), currency)}</strong>{" "}
             al mes con las condiciones actuales.
           </p>
         )}
         {isBreakeven && (
-          <p className="mt-3 text-sm text-slate-600">
+          <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
             Los ingresos cubren exactamente los costos. No hay pérdida ni ganancia.
           </p>
         )}
       </div>
 
       {/* Mini-KPI strip */}
-      <div className="flex flex-wrap items-center gap-3 border-t border-black/5 px-6 py-3">
+      <div className="flex flex-wrap items-center gap-3 border-t border-black/5 px-6 py-3 dark:border-white/5">
         <span
           className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${chip.badgeClass}`}
         >
@@ -93,9 +93,9 @@ export function ResultsSummary({
         </span>
 
         {breakevenMinUnits !== null && (
-          <span className="text-xs text-slate-500">
-            <span className="font-medium text-slate-600">Equilibrio:</span>{" "}
-            <strong className="font-semibold text-slate-700">
+          <span className="text-xs text-slate-500 dark:text-slate-400">
+            <span className="font-medium text-slate-600 dark:text-slate-300">Equilibrio:</span>{" "}
+            <strong className="font-semibold text-slate-700 dark:text-slate-200">
               {breakevenMinUnits.toLocaleString("es-CO")} unidades
             </strong>
           </span>

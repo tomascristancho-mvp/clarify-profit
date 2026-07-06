@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: `dark:` utilities apply when <html> has .dark */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #f6f7fb;
   --foreground: #0f172a;
+}
+
+.dark {
+  --background: #0b1120;
+  --foreground: #e2e8f0;
 }
 
 @theme inline {
@@ -14,6 +22,11 @@
 html {
   overflow-x: hidden;
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {

@@ -19,16 +19,19 @@ const SECTION_W = VIEW_W / 4; // 120
 const BAR_W = 72;
 const BAR_PADDING = (SECTION_W - BAR_W) / 2; // 24
 const MIN_H = 4;
+const GRIDLINES = 4;
 
+// Tailwind fill/stroke classes — dark variants keep labels readable in dark mode.
 const COLORS = {
-  revenue:  { bar: "#6366f1", label: "#4338ca" }, // indigo-500/700
-  variable: { bar: "#fbbf24", label: "#b45309" }, // amber-400/700
-  fixed:    { bar: "#94a3b8", label: "#475569" }, // slate-400/600
-  profit:   { bar: "#10b981", label: "#047857" }, // emerald-500/700
-  loss:     { bar: "#ef4444", label: "#b91c1c" }, // red-500/700
-  breakeven:{ bar: "#94a3b8", label: "#64748b" }, // slate-400/500
-  axis:   "#e2e8f0",
-  bridge: "#cbd5e1",
+  revenue:  { bar: "fill-indigo-500",  label: "fill-indigo-700 dark:fill-indigo-300" },
+  variable: { bar: "fill-amber-400",   label: "fill-amber-700 dark:fill-amber-300" },
+  fixed:    { bar: "fill-slate-400",   label: "fill-slate-600 dark:fill-slate-300" },
+  profit:   { bar: "fill-emerald-500", label: "fill-emerald-700 dark:fill-emerald-300" },
+  loss:     { bar: "fill-red-500",     label: "fill-red-700 dark:fill-red-300" },
+  breakeven:{ bar: "fill-slate-400",   label: "fill-slate-500 dark:fill-slate-400" },
+  axis:   "stroke-slate-200 dark:stroke-slate-700",
+  grid:   "stroke-slate-100 dark:stroke-slate-800",
+  bridge: "stroke-slate-300 dark:stroke-slate-600",
 } as const;
 
 export function ProfitBreakdownChart({
@@ -126,14 +129,20 @@ export function ProfitBreakdownChart({
     : `Después de cubrir costos variables y fijos, los datos sugieren ${formatCurrency(P, currency)} como utilidad operativa estimada sobre ingresos de ${formatCurrency(R, currency)}.`;
 
   const categoryLabels = [
-    { text: "Ingresos",     fill: COLORS.revenue.label },
-    { text: "Costos var.",  fill: COLORS.variable.label },
-    { text: "Costos fijos", fill: COLORS.fixed.label },
+    { text: "Ingresos",     labelClass: COLORS.revenue.label },
+    { text: "Costos var.",  labelClass: COLORS.variable.label },
+    { text: "Costos fijos", labelClass: COLORS.fixed.label },
     {
       text: isLoss ? "Pérdida" : isBreakeven ? "Equilibrio" : "Utilidad",
-      fill: profitColor.label,
+      labelClass: profitColor.label,
     },
   ];
+
+  // Subtle horizontal gridlines across the plot area
+  const gridYs = Array.from(
+    { length: GRIDLINES },
+    (_, i) => CHART_TOP + (CHART_H * (i + 1)) / (GRIDLINES + 1)
+  );
 
   return (
     <figure className="w-full">
@@ -143,12 +152,22 @@ export function ProfitBreakdownChart({
         role="img"
         aria-label={ariaLabel}
       >
+        {/* ── Gridlines (behind everything) ─────────────────────── */}
+        {gridYs.map((y) => (
+          <line
+            key={y}
+            x1={0} y1={y} x2={VIEW_W} y2={y}
+            className={COLORS.grid}
+            strokeWidth={1}
+          />
+        ))}
+
         {/* ── 1. Revenue bar ─────────────────────────────────────── */}
-        <rect x={bX(0)} y={revY} width={BAR_W} height={revH} fill={COLORS.revenue.bar} rx={3} />
+        <rect x={bX(0)} y={revY} width={BAR_W} height={revH} className={COLORS.revenue.bar} rx={3} />
         <text
           x={cX(0)} y={revLabelY}
           textAnchor="middle" dominantBaseline="auto"
-          fontSize={11} fontWeight="600" fill={COLORS.revenue.label}
+          fontSize={11} fontWeight="600" className={COLORS.revenue.label}
         >
           {formatCurrency(R, currency)}
         </text>
@@ -156,15 +175,15 @@ export function ProfitBreakdownChart({
         {/* Bridge: revenue level → start of variable costs bar */}
         <line
           x1={bX(0) + BAR_W} y1={toY(R)} x2={bX(1)} y2={toY(R)}
-          stroke={COLORS.bridge} strokeWidth={1} strokeDasharray="3 2"
+          className={COLORS.bridge} strokeWidth={1} strokeDasharray="3 2"
         />
 
         {/* ── 2. Variable costs floating bar ────────────────────── */}
-        <rect x={bX(1)} y={vcY} width={BAR_W} height={vcH} fill={COLORS.variable.bar} rx={3} />
+        <rect x={bX(1)} y={vcY} width={BAR_W} height={vcH} className={COLORS.variable.bar} rx={3} />
         <text
           x={cX(1)} y={vcLabelY}
           textAnchor="middle" dominantBaseline="auto"
-          fontSize={11} fontWeight="600" fill={COLORS.variable.label}
+          fontSize={11} fontWeight="600" className={COLORS.variable.label}
         >
           −{formatCurrency(VC, currency)}
         </text>
@@ -172,15 +191,15 @@ export function ProfitBreakdownChart({
         {/* Bridge: contribution margin level → start of fixed costs bar */}
         <line
           x1={bX(1) + BAR_W} y1={toY(CM)} x2={bX(2)} y2={toY(CM)}
-          stroke={COLORS.bridge} strokeWidth={1} strokeDasharray="3 2"
+          className={COLORS.bridge} strokeWidth={1} strokeDasharray="3 2"
         />
 
         {/* ── 3. Fixed costs floating bar ───────────────────────── */}
-        <rect x={bX(2)} y={fcY} width={BAR_W} height={fcH} fill={COLORS.fixed.bar} rx={3} />
+        <rect x={bX(2)} y={fcY} width={BAR_W} height={fcH} className={COLORS.fixed.bar} rx={3} />
         <text
           x={cX(2)} y={fcLabelY}
           textAnchor="middle" dominantBaseline="auto"
-          fontSize={11} fontWeight="600" fill={COLORS.fixed.label}
+          fontSize={11} fontWeight="600" className={COLORS.fixed.label}
         >
           −{formatCurrency(FC, currency)}
         </text>
@@ -189,36 +208,36 @@ export function ProfitBreakdownChart({
         {isProfit && (
           <line
             x1={bX(2) + BAR_W} y1={toY(P)} x2={bX(3)} y2={toY(P)}
-            stroke={COLORS.bridge} strokeWidth={1} strokeDasharray="3 2"
+            className={COLORS.bridge} strokeWidth={1} strokeDasharray="3 2"
           />
         )}
 
         {/* ── 4. Profit / Loss bar ───────────────────────────────── */}
-        <rect x={bX(3)} y={pBarY} width={BAR_W} height={pBarH} fill={profitColor.bar} rx={3} />
+        <rect x={bX(3)} y={pBarY} width={BAR_W} height={pBarH} className={profitColor.bar} rx={3} />
         <text
           x={cX(3)} y={pLabelY}
           textAnchor="middle" dominantBaseline={pBaseline}
-          fontSize={11} fontWeight="600" fill={profitColor.label}
+          fontSize={11} fontWeight="600" className={profitColor.label}
         >
           {profitDisplayValue}
         </text>
 
         {/* ── Zero axis (drawn last so it renders above the bars) ── */}
-        <line x1={0} y1={zeroY} x2={VIEW_W} y2={zeroY} stroke={COLORS.axis} strokeWidth={2} />
+        <line x1={0} y1={zeroY} x2={VIEW_W} y2={zeroY} className={COLORS.axis} strokeWidth={2} />
 
         {/* ── Category labels ────────────────────────────────────── */}
-        {categoryLabels.map(({ text, fill }, i) => (
+        {categoryLabels.map(({ text, labelClass }, i) => (
           <text
             key={text}
             x={cX(i)} y={LABELS_Y}
             textAnchor="middle" dominantBaseline="hanging"
-            fontSize={11} fontWeight="500" fill={fill}
+            fontSize={11} fontWeight="500" className={labelClass}
           >
             {text}
           </text>
         ))}
       </svg>
-      <figcaption className="mt-3 text-xs leading-relaxed text-slate-500">
+      <figcaption className="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
         {narrativeText}
       </figcaption>
     </figure>

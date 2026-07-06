@@ -23,14 +23,14 @@ export function StickyReportCta() {
   if (hidden) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 px-4 py-2.5 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] backdrop-blur-sm sm:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 px-4 py-2.5 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] backdrop-blur-sm sm:hidden dark:border-slate-700 dark:bg-slate-900/95">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className="truncate text-xs font-semibold text-slate-800">
+          <p className="truncate text-xs font-semibold text-slate-800 dark:text-slate-100">
             Reporte ejecutivo premium
           </p>
-          <p className="text-[10px] text-slate-500">
-            <strong className="text-indigo-600">$9.900 COP</strong> · Versión piloto
+          <p className="text-[10px] text-slate-500 dark:text-slate-400">
+            <strong className="text-indigo-600 dark:text-indigo-400">$9.900 COP</strong> · Versión piloto
           </p>
         </div>
         <a

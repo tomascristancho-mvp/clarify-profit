@@ -26,16 +26,16 @@ export function HowItWorks() {
   return (
     <section
       aria-labelledby="how-it-works-heading"
-      className="border-b border-slate-100 bg-white"
+      className="border-b border-slate-100 bg-white dark:border-slate-800 dark:bg-slate-900"
     >
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
         <h2
           id="how-it-works-heading"
-          className="mb-2 text-center text-2xl font-bold tracking-tight text-slate-800"
+          className="mb-2 text-center text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100"
         >
           Cómo funciona
         </h2>
-        <p className="mx-auto mb-8 max-w-md text-center text-sm text-slate-500">
+        <p className="mx-auto mb-8 max-w-md text-center text-sm text-slate-500 dark:text-slate-400">
           Tres pasos, dos minutos, cero conocimientos contables.
         </p>
 
@@ -49,10 +49,10 @@ export function HowItWorks() {
                 {step.number}
               </span>
               <div>
-                <h3 className="mb-1 text-sm font-semibold text-slate-800">
+                <h3 className="mb-1 text-sm font-semibold text-slate-800 dark:text-slate-100">
                   {step.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-slate-500">
+                <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
                   {step.description}
                 </p>
               </div>

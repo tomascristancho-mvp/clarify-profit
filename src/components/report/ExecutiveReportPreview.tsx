@@ -25,7 +25,7 @@ interface ExecutiveReportPreviewProps {
 
 function LockedSection({ title, hint }: { title: string; hint: string }) {
   return (
-    <div className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+    <div className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800/60">
       {/* Placeholder bars — blurred background layer; the card grows with the
           real text content so nothing gets clipped on narrow screens. */}
       <div
@@ -33,14 +33,14 @@ function LockedSection({ title, hint }: { title: string; hint: string }) {
         aria-hidden="true"
       >
         {["w-full", "w-4/5", "w-3/5"].map((w, i) => (
-          <div key={i} className={`h-2 rounded-full bg-slate-500 ${w}`} />
+          <div key={i} className={`h-2 rounded-full bg-slate-500 dark:bg-slate-400 ${w}`} />
         ))}
       </div>
       {/* Lock content — in normal flow, defines the card height */}
-      <div className="relative flex flex-col items-center justify-center gap-1 bg-slate-50/90 p-3 text-center">
-        <p className="text-[11px] font-bold leading-tight text-slate-700">{title}</p>
-        <p className="text-[10px] leading-tight text-slate-500">{hint}</p>
-        <span className="mt-0.5 text-[10px] font-semibold text-indigo-600">
+      <div className="relative flex flex-col items-center justify-center gap-1 bg-slate-50/90 p-3 text-center dark:bg-slate-900/80">
+        <p className="text-[11px] font-bold leading-tight text-slate-700 dark:text-slate-200">{title}</p>
+        <p className="text-[10px] leading-tight text-slate-500 dark:text-slate-400">{hint}</p>
+        <span className="mt-0.5 text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">
           Solo en el reporte completo
         </span>
       </div>
@@ -124,7 +124,7 @@ export function ExecutiveReportPreview({
   return (
     // id="reporte-ejecutivo" inherited from ExecutiveReportTeaser — keeps ReportMiniCta link working
     <section id="reporte-ejecutivo" aria-labelledby="report-preview-heading">
-      <div className="overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-slate-200 shadow-sm dark:border-slate-800">
 
         {/* ── Header ──────────────────────────────────────────────── */}
         <div className="bg-slate-900 px-4 py-3 sm:px-6">
@@ -150,7 +150,7 @@ export function ExecutiveReportPreview({
         </div>
 
         {/* ── Métricas clave ──────────────────────────────────────── */}
-        <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6">
+        <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6 dark:border-slate-800 dark:bg-slate-900">
           <p className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
             Métricas clave
           </p>
@@ -158,16 +158,16 @@ export function ExecutiveReportPreview({
 
             {/* Utilidad / Pérdida */}
             <div className="min-w-0">
-              <p className="mb-0.5 text-[10px] leading-tight text-slate-500">
+              <p className="mb-0.5 text-[10px] leading-tight text-slate-500 dark:text-slate-400">
                 Utilidad mensual
               </p>
               <p
                 className={`truncate text-sm font-bold tracking-tight sm:text-base ${
                   isLoss
-                    ? "text-red-700"
+                    ? "text-red-700 dark:text-red-400"
                     : profit === 0
-                    ? "text-slate-700"
-                    : "text-emerald-700"
+                    ? "text-slate-700 dark:text-slate-300"
+                    : "text-emerald-700 dark:text-emerald-400"
                 }`}
               >
                 {isLoss && "−"}
@@ -181,10 +181,10 @@ export function ExecutiveReportPreview({
             {/* Margen de contribución */}
             {calculation.contributionMarginPct.status === "valido" && (
               <div className="min-w-0">
-                <p className="mb-0.5 text-[10px] leading-tight text-slate-500">
+                <p className="mb-0.5 text-[10px] leading-tight text-slate-500 dark:text-slate-400">
                   Margen contrib.
                 </p>
-                <p className="truncate text-sm font-bold tracking-tight text-slate-800 sm:text-base">
+                <p className="truncate text-sm font-bold tracking-tight text-slate-800 sm:text-base dark:text-slate-100">
                   {formatPercentage(calculation.contributionMarginPct.value)}
                 </p>
                 <p className="text-[10px] leading-tight text-slate-400">del precio</p>
@@ -194,10 +194,10 @@ export function ExecutiveReportPreview({
             {/* Punto de equilibrio */}
             {calculation.breakevenUnits.status === "valido" && (
               <div className="min-w-0">
-                <p className="mb-0.5 text-[10px] leading-tight text-slate-500">
+                <p className="mb-0.5 text-[10px] leading-tight text-slate-500 dark:text-slate-400">
                   Pto. equilibrio
                 </p>
-                <p className="truncate text-sm font-bold tracking-tight text-slate-800 sm:text-base">
+                <p className="truncate text-sm font-bold tracking-tight text-slate-800 sm:text-base dark:text-slate-100">
                   {calculation.breakevenUnits.value.minimumWholeUnits.toLocaleString(
                     "es-CO"
                   )}
@@ -209,7 +209,7 @@ export function ExecutiveReportPreview({
         </div>
 
         {/* ── Diagnóstico ──────────────────────────────────────────── */}
-        <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6">
+        <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6 dark:border-slate-800 dark:bg-slate-900">
           <p className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
             Diagnóstico
           </p>
@@ -226,23 +226,23 @@ export function ExecutiveReportPreview({
                 </span>
               )}
             </div>
-            <p className="text-xs leading-relaxed text-slate-700">
+            <p className="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
               {diagnosis.summary}
             </p>
           </div>
         </div>
 
         {/* ── Variable más peligrosa ───────────────────────────────── */}
-        <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6">
+        <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6 dark:border-slate-800 dark:bg-slate-900">
           <p className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
             Variable más peligrosa
           </p>
           {mostDangerous !== null ? (
-            <div className="flex items-center justify-between gap-3 rounded-lg border border-red-100 bg-red-50/60 px-3 py-2.5">
-              <p className="min-w-0 truncate text-xs font-semibold text-red-800">
+            <div className="flex items-center justify-between gap-3 rounded-lg border border-red-100 bg-red-50/60 px-3 py-2.5 dark:border-red-900 dark:bg-red-950/40">
+              <p className="min-w-0 truncate text-xs font-semibold text-red-800 dark:text-red-300">
                 {mostDangerous.label}
               </p>
-              <p className="flex-shrink-0 text-sm font-bold text-red-700">
+              <p className="flex-shrink-0 text-sm font-bold text-red-700 dark:text-red-400">
                 −{formatCurrency(
                   Math.abs(mostDangerous.profitDelta),
                   validatedInputs.currency
@@ -250,7 +250,7 @@ export function ExecutiveReportPreview({
               </p>
             </div>
           ) : (
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               No se identificaron variables de riesgo crítico.
             </p>
           )}
@@ -258,18 +258,18 @@ export function ExecutiveReportPreview({
 
         {/* ── Meta mínima semanal ──────────────────────────────────── */}
         {weeklyTarget !== null && breakevenMinUnits !== null && (
-          <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6">
+          <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6 dark:border-slate-800 dark:bg-slate-900">
             <p className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
               Meta mínima semanal
             </p>
-            <div className="rounded-lg border border-indigo-100 bg-indigo-50/40 px-3 py-2.5">
+            <div className="rounded-lg border border-indigo-100 bg-indigo-50/40 px-3 py-2.5 dark:border-indigo-900 dark:bg-indigo-950/40">
               <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-bold tracking-tight text-indigo-700">
+                <span className="text-xl font-bold tracking-tight text-indigo-700 dark:text-indigo-300">
                   {weeklyTarget.toLocaleString("es-CO")}
                 </span>
-                <span className="text-xs text-indigo-500">unidades / semana</span>
+                <span className="text-xs text-indigo-500 dark:text-indigo-400">unidades / semana</span>
               </div>
-              <p className="mt-1 text-[10px] leading-relaxed text-slate-500">
+              <p className="mt-1 text-[10px] leading-relaxed text-slate-500 dark:text-slate-400">
                 Piso mínimo para no operar en pérdida (equivalente a{" "}
                 {breakevenMinUnits.toLocaleString("es-CO")} unidades al mes).
               </p>
@@ -278,7 +278,7 @@ export function ExecutiveReportPreview({
         )}
 
         {/* ── Secciones bloqueadas ─────────────────────────────────── */}
-        <div className="border-b border-slate-100 bg-slate-50/40 px-4 py-3 sm:px-6">
+        <div className="border-b border-slate-100 bg-slate-50/40 px-4 py-3 sm:px-6 dark:border-slate-800 dark:bg-slate-800/30">
           <p className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
             Solo en el reporte completo
           </p>
@@ -303,7 +303,7 @@ export function ExecutiveReportPreview({
         </div>
 
         {/* ── CTA WhatsApp ─────────────────────────────────────────── */}
-        <div className="bg-white px-4 py-3 sm:px-6">
+        <div className="bg-white px-4 py-3 sm:px-6 dark:bg-slate-900">
           <div className="flex flex-wrap items-center gap-3">
             <a
               href={whatsappUrl}
@@ -324,8 +324,8 @@ export function ExecutiveReportPreview({
                 Pagar online
               </a>
             )}
-            <p className="text-[10px] leading-relaxed text-slate-400">
-              <strong className="text-slate-500">$9.900 COP</strong> · Versión
+            <p className="text-[10px] leading-relaxed text-slate-400 dark:text-slate-500">
+              <strong className="text-slate-500 dark:text-slate-400">$9.900 COP</strong> · Versión
               piloto · Sin registro obligatorio
             </p>
           </div>

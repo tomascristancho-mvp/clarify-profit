@@ -34,14 +34,25 @@ export const metadata: Metadata = {
   },
 };
 
+// Applies the saved (or system) theme before first paint to avoid a flash
+// of the wrong mode. Must be inline and synchronous — do not move to a module.
+const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${geistSans.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col font-sans text-slate-900">
+    <html
+      lang="es"
+      className={`${geistSans.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
+      <body className="flex min-h-full flex-col font-sans text-slate-900 dark:text-slate-100">
         {children}
       </body>
     </html>

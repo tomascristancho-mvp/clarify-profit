@@ -60,11 +60,11 @@ export function CalculatorApp() {
         >
           <h2
             id="form-heading"
-            className="mb-4 text-xl font-semibold text-slate-800"
+            className="mb-4 text-xl font-semibold text-slate-800 dark:text-slate-100"
           >
             Datos del negocio
           </h2>
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <CalculatorForm
               inputs={inputs}
               errors={errors}
@@ -89,7 +89,7 @@ export function CalculatorApp() {
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
                   <h2
                     id="results-heading"
-                    className="text-xl font-semibold text-slate-800"
+                    className="text-xl font-semibold text-slate-800 dark:text-slate-100"
                   >
                     Resultado principal
                     {results.validatedInputs.businessName && (

@@ -1,3 +1,5 @@
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
+
 const SCENARIO_BARS: Array<{ label: string; barClass: string; color: string }> = [
   { label: "Pes.", barClass: "h-4", color: "bg-red-400/60" },
   { label: "Esp.", barClass: "h-8", color: "bg-indigo-400/70" },
@@ -16,6 +18,11 @@ export function Header() {
         aria-hidden="true"
         className="pointer-events-none absolute bottom-0 left-10 h-64 w-64 rounded-full bg-violet-500/15 blur-3xl"
       />
+
+      {/* Theme toggle — floats over the hero, top right */}
+      <div className="absolute right-4 top-4 z-10 sm:right-6">
+        <ThemeToggle />
+      </div>
 
       <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
         <div className="grid items-center gap-10 lg:grid-cols-2">

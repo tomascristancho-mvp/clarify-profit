@@ -15,18 +15,18 @@ export function IndicatorsGrid({ result, currency }: IndicatorsGridProps) {
     <section aria-labelledby="indicators-heading">
       <h3
         id="indicators-heading"
-        className="mb-4 text-lg font-semibold text-slate-800"
+        className="mb-4 text-lg font-semibold text-slate-800 dark:text-slate-100"
       >
         Indicadores principales
       </h3>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-slate-200 shadow-sm dark:border-slate-800">
 
         {/* Two-column layout on desktop: chart left, KPI cards right */}
         <div className="grid lg:grid-cols-2">
 
           {/* Left column: waterfall chart */}
-          <div className="bg-white p-5 lg:border-r lg:border-slate-100">
+          <div className="bg-white p-5 lg:border-r lg:border-slate-100 dark:bg-slate-900 dark:lg:border-slate-800">
             <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
               Desglose mensual
             </p>
@@ -40,7 +40,7 @@ export function IndicatorsGrid({ result, currency }: IndicatorsGridProps) {
           </div>
 
           {/* Right column: 4 KPI indicator cards in 2×2 grid */}
-          <div className="border-t border-slate-100 bg-white p-5 lg:border-t-0">
+          <div className="border-t border-slate-100 bg-white p-5 lg:border-t-0 dark:border-slate-800 dark:bg-slate-900">
             <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
               Métricas clave
             </p>
@@ -53,7 +53,7 @@ export function IndicatorsGrid({ result, currency }: IndicatorsGridProps) {
                     <span className="block">
                       {formatCurrency(result.contributionMarginPerUnit, currency)}
                     </span>
-                    <span className="block text-base font-normal text-slate-500">
+                    <span className="block text-base font-normal text-slate-500 dark:text-slate-400">
                       {formatPercentage(pct)} del precio de venta
                     </span>
                   </>
@@ -93,18 +93,18 @@ export function IndicatorsGrid({ result, currency }: IndicatorsGridProps) {
 
         {/* Footer strip: breakeven revenue — integrated inside the unified block */}
         {result.breakevenRevenue.status === "valido" && (
-          <div className="border-t border-slate-100 bg-slate-50/60 px-5 py-4 text-sm">
-            <p className="mb-0.5 font-semibold text-slate-700">
+          <div className="border-t border-slate-100 bg-slate-50/60 px-5 py-4 text-sm dark:border-slate-800 dark:bg-slate-800/40">
+            <p className="mb-0.5 font-semibold text-slate-700 dark:text-slate-200">
               Ventas necesarias para el equilibrio
             </p>
-            <p className="text-slate-600">
+            <p className="text-slate-600 dark:text-slate-300">
               Teórico:{" "}
-              <strong className="text-slate-800">
+              <strong className="text-slate-800 dark:text-slate-100">
                 {formatCurrency(result.breakevenRevenue.value.theoretical, currency)}
               </strong>
               {" · "}
               Vendiendo unidades completas:{" "}
-              <strong className="text-slate-800">
+              <strong className="text-slate-800 dark:text-slate-100">
                 {formatCurrency(
                   result.breakevenRevenue.value.atMinimumWholeUnits,
                   currency

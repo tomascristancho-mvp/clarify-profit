@@ -16,41 +16,49 @@ const RISK_CONFIG: Record<RiskLevel, RiskConfig> = {
     label: "Bajo riesgo",
     icon: "✓",
     borderColor: "border-l-emerald-500",
-    bgClass: "border-emerald-100 bg-gradient-to-br from-emerald-50 to-white",
-    badgeClass: "bg-emerald-100 text-emerald-800 ring-emerald-200",
+    bgClass:
+      "border-emerald-100 bg-gradient-to-br from-emerald-50 to-white dark:border-emerald-900 dark:from-emerald-950/40 dark:to-slate-900",
+    badgeClass:
+      "bg-emerald-100 text-emerald-800 ring-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-300 dark:ring-emerald-800",
     iconBgClass: "bg-emerald-500 text-white",
-    textClass: "text-emerald-900",
-    footerBg: "bg-emerald-100/60",
+    textClass: "text-emerald-900 dark:text-emerald-100",
+    footerBg: "bg-emerald-100/60 dark:bg-emerald-950/50",
   },
   medio: {
     label: "Riesgo moderado",
     icon: "!",
     borderColor: "border-l-amber-500",
-    bgClass: "border-amber-100 bg-gradient-to-br from-amber-50 to-white",
-    badgeClass: "bg-amber-100 text-amber-800 ring-amber-200",
+    bgClass:
+      "border-amber-100 bg-gradient-to-br from-amber-50 to-white dark:border-amber-900 dark:from-amber-950/40 dark:to-slate-900",
+    badgeClass:
+      "bg-amber-100 text-amber-800 ring-amber-200 dark:bg-amber-900/50 dark:text-amber-300 dark:ring-amber-800",
     iconBgClass: "bg-amber-500 text-white",
-    textClass: "text-amber-900",
-    footerBg: "bg-amber-100/60",
+    textClass: "text-amber-900 dark:text-amber-100",
+    footerBg: "bg-amber-100/60 dark:bg-amber-950/50",
   },
   alto: {
     label: "Riesgo alto",
     icon: "⚠",
     borderColor: "border-l-orange-500",
-    bgClass: "border-orange-100 bg-gradient-to-br from-orange-50 to-white",
-    badgeClass: "bg-orange-100 text-orange-800 ring-orange-200",
+    bgClass:
+      "border-orange-100 bg-gradient-to-br from-orange-50 to-white dark:border-orange-900 dark:from-orange-950/40 dark:to-slate-900",
+    badgeClass:
+      "bg-orange-100 text-orange-800 ring-orange-200 dark:bg-orange-900/50 dark:text-orange-300 dark:ring-orange-800",
     iconBgClass: "bg-orange-500 text-white",
-    textClass: "text-orange-900",
-    footerBg: "bg-orange-100/60",
+    textClass: "text-orange-900 dark:text-orange-100",
+    footerBg: "bg-orange-100/60 dark:bg-orange-950/50",
   },
   no_viable: {
     label: "No viable con estos datos",
     icon: "✕",
     borderColor: "border-l-red-500",
-    bgClass: "border-red-100 bg-gradient-to-br from-red-50 to-white",
-    badgeClass: "bg-red-100 text-red-800 ring-red-200",
+    bgClass:
+      "border-red-100 bg-gradient-to-br from-red-50 to-white dark:border-red-900 dark:from-red-950/40 dark:to-slate-900",
+    badgeClass:
+      "bg-red-100 text-red-800 ring-red-200 dark:bg-red-900/50 dark:text-red-300 dark:ring-red-800",
     iconBgClass: "bg-red-500 text-white",
-    textClass: "text-red-900",
-    footerBg: "bg-red-100/60",
+    textClass: "text-red-900 dark:text-red-100",
+    footerBg: "bg-red-100/60 dark:bg-red-950/50",
   },
 };
 
@@ -87,7 +95,7 @@ export function ExecutiveDiagnosis({ diagnosis }: ExecutiveDiagnosisProps) {
     <section aria-labelledby="diagnosis-heading">
       <h3
         id="diagnosis-heading"
-        className="mb-3 text-lg font-semibold text-slate-800"
+        className="mb-3 text-lg font-semibold text-slate-800 dark:text-slate-100"
       >
         Veredicto ejecutivo
       </h3>
@@ -122,9 +130,9 @@ export function ExecutiveDiagnosis({ diagnosis }: ExecutiveDiagnosisProps) {
 
           {/* Positive reading — only for bajo / medio */}
           {strengthText !== undefined && (
-            <div className="mt-3 border-t border-black/5 pt-3">
-              <p className="text-xs leading-relaxed text-slate-600">
-                <span className="font-semibold text-slate-700">Lectura positiva: </span>
+            <div className="mt-3 border-t border-black/5 pt-3 dark:border-white/10">
+              <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                <span className="font-semibold text-slate-700 dark:text-slate-200">Lectura positiva: </span>
                 {strengthText}
               </p>
             </div>
@@ -132,12 +140,12 @@ export function ExecutiveDiagnosis({ diagnosis }: ExecutiveDiagnosisProps) {
 
           {/* Risk factor — only when the domain provides one */}
           {diagnosis.mainRiskFactor !== null && (
-            <div className="mt-3 flex items-start gap-2 border-t border-black/5 pt-3">
+            <div className="mt-3 flex items-start gap-2 border-t border-black/5 pt-3 dark:border-white/10">
               <span aria-hidden="true" className="mt-px flex-shrink-0 text-sm opacity-40">
                 ⚠
               </span>
-              <p className="text-xs text-slate-600">
-                <span className="font-semibold text-slate-700">Factor de riesgo: </span>
+              <p className="text-xs text-slate-600 dark:text-slate-300">
+                <span className="font-semibold text-slate-700 dark:text-slate-200">Factor de riesgo: </span>
                 {diagnosis.mainRiskFactor}
               </p>
             </div>
@@ -145,9 +153,9 @@ export function ExecutiveDiagnosis({ diagnosis }: ExecutiveDiagnosisProps) {
         </div>
 
         {/* ── Footer: Para explorar ──────────────────────────────── */}
-        <div className={`border-t border-black/5 px-5 py-3 ${config.footerBg}`}>
-          <p className="text-xs leading-relaxed text-slate-600">
-            <span className="font-semibold text-slate-700">Para explorar →</span>{" "}
+        <div className={`border-t border-black/5 px-5 py-3 dark:border-white/10 ${config.footerBg}`}>
+          <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+            <span className="font-semibold text-slate-700 dark:text-slate-200">Para explorar →</span>{" "}
             {NEXT_STEP[diagnosis.riskLevel]}
           </p>
         </div>

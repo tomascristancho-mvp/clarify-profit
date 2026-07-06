@@ -26,7 +26,10 @@ export function FormField({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-sm font-semibold text-slate-700">
+      <label
+        htmlFor={id}
+        className="text-sm font-semibold text-slate-700 dark:text-slate-200"
+      >
         {label}
         {required && (
           <span aria-hidden="true" className="ml-0.5 text-red-500">
@@ -36,7 +39,7 @@ export function FormField({
       </label>
 
       {hint && (
-        <p id={hintId} className="text-xs text-slate-400">
+        <p id={hintId} className="text-xs text-slate-400 dark:text-slate-500">
           {hint}
         </p>
       )}
@@ -51,11 +54,11 @@ export function FormField({
         aria-invalid={error ? "true" : undefined}
         aria-required={required}
         className={[
-          "rounded-lg border px-3 py-3 text-sm text-slate-900 transition-all duration-150",
-          "focus:outline-none focus:ring-2 focus:ring-offset-1",
+          "rounded-lg border px-3 py-3 text-sm text-slate-900 transition-all duration-150 dark:text-slate-100",
+          "focus:outline-none focus:ring-2 focus:ring-offset-1 dark:focus:ring-offset-slate-900",
           error
-            ? "border-red-400 bg-red-50 focus:ring-red-400/30"
-            : "border-slate-200 bg-white hover:border-slate-300 focus:border-indigo-400 focus:ring-indigo-400/30",
+            ? "border-red-400 bg-red-50 focus:ring-red-400/30 dark:border-red-700 dark:bg-red-950/40"
+            : "border-slate-200 bg-white hover:border-slate-300 focus:border-indigo-400 focus:ring-indigo-400/30 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-slate-600 dark:focus:border-indigo-500",
         ].join(" ")}
       />
 
@@ -63,7 +66,7 @@ export function FormField({
         <p
           id={errorId}
           role="alert"
-          className="flex items-start gap-1 text-xs text-red-600"
+          className="flex items-start gap-1 text-xs text-red-600 dark:text-red-400"
         >
           <span aria-hidden="true" className="flex-shrink-0 font-bold">
             ⚠

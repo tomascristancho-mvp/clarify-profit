@@ -7,26 +7,31 @@ interface ScenarioChartProps {
   currency: CurrencyCode;
 }
 
+// Tailwind fill classes — dark variants keep labels readable in dark mode.
 const SCENARIO_STYLE = {
   pesimista: {
-    fill: "#f87171",      // red-400
-    labelFill: "#b91c1c", // red-700
+    barClass: "fill-red-400",
+    labelClass: "fill-red-700 dark:fill-red-300",
     shortLabel: "Pesimista",
   },
   esperado: {
-    fill: "#6366f1",      // indigo-500
-    labelFill: "#4338ca", // indigo-700
+    barClass: "fill-indigo-500",
+    labelClass: "fill-indigo-700 dark:fill-indigo-300",
     shortLabel: "Esperado",
   },
   optimista: {
-    fill: "#10b981",      // emerald-500
-    labelFill: "#047857", // emerald-700
+    barClass: "fill-emerald-500",
+    labelClass: "fill-emerald-700 dark:fill-emerald-300",
     shortLabel: "Optimista",
   },
 } as const;
 
-const LOSS_FILL = "#f87171";
-const LOSS_LABEL_FILL = "#b91c1c";
+const LOSS_BAR_CLASS = "fill-red-400";
+const LOSS_LABEL_CLASS = "fill-red-700 dark:fill-red-300";
+const ZERO_BAR_CLASS = "fill-slate-400";
+const ZERO_LABEL_CLASS = "fill-slate-500 dark:fill-slate-400";
+const AXIS_CLASS = "stroke-slate-200 dark:stroke-slate-700";
+const GRID_CLASS = "stroke-slate-100 dark:stroke-slate-800";
 
 // SVG layout constants (user units)
 const VIEW_W = 420;
@@ -38,6 +43,7 @@ const SECTION_W = VIEW_W / 3;             // 140
 const BAR_W = 88;
 const BAR_PADDING = (SECTION_W - BAR_W) / 2; // 26
 const MIN_H = 4; // minimum visible height for zero-value bars
+const GRIDLINES = 4;
 
 export function ScenarioChart({ scenarios, currency }: ScenarioChartProps) {
   const profits = scenarios.map((s) => s.operatingProfit);
@@ -53,6 +59,11 @@ export function ScenarioChart({ scenarios, currency }: ScenarioChartProps) {
   };
 
   const zeroY = toY(0);
+
+  const gridYs = Array.from(
+    { length: GRIDLINES },
+    (_, i) => CHART_TOP + (CHART_H * (i + 1)) / (GRIDLINES + 1)
+  );
 
   const ariaLabel =
     "Comparación de escenarios. " +
@@ -71,13 +82,23 @@ export function ScenarioChart({ scenarios, currency }: ScenarioChartProps) {
         width="100%"
         aria-hidden="true"
       >
+        {/* Gridlines (behind everything) */}
+        {gridYs.map((y) => (
+          <line
+            key={y}
+            x1={0} y1={y} x2={VIEW_W} y2={y}
+            className={GRID_CLASS}
+            strokeWidth={1}
+          />
+        ))}
+
         {/* Zero axis */}
         <line
           x1={0}
           y1={zeroY}
           x2={VIEW_W}
           y2={zeroY}
-          stroke="#e2e8f0"
+          className={AXIS_CLASS}
           strokeWidth={2}
         />
 
@@ -89,33 +110,33 @@ export function ScenarioChart({ scenarios, currency }: ScenarioChartProps) {
 
           let rectY: number;
           let rectHeight: number;
-          let fill: string;
+          let barClass: string;
           let valueLabelY: number;
           let valueDominantBaseline: "auto" | "hanging";
-          let valueLabelFill: string;
+          let valueLabelClass: string;
 
           if (profit > 0) {
             rectY = toY(profit);
             rectHeight = zeroY - rectY;
-            fill = style.fill;
+            barClass = style.barClass;
             valueLabelY = rectY - 6;
             valueDominantBaseline = "auto";
-            valueLabelFill = style.labelFill;
+            valueLabelClass = style.labelClass;
           } else if (profit < 0) {
             rectY = zeroY;
             rectHeight = toY(profit) - zeroY;
-            fill = LOSS_FILL;
+            barClass = LOSS_BAR_CLASS;
             valueLabelY = rectY + rectHeight + 8;
             valueDominantBaseline = "hanging";
-            valueLabelFill = LOSS_LABEL_FILL;
+            valueLabelClass = LOSS_LABEL_CLASS;
           } else {
             // profit === 0: minimal bar centered on zero axis
             rectY = zeroY - MIN_H / 2;
             rectHeight = MIN_H;
-            fill = "#94a3b8"; // slate-400
+            barClass = ZERO_BAR_CLASS;
             valueLabelY = zeroY - 8;
             valueDominantBaseline = "auto";
-            valueLabelFill = "#64748b"; // slate-500
+            valueLabelClass = ZERO_LABEL_CLASS;
           }
 
           const displayValue =
@@ -129,7 +150,7 @@ export function ScenarioChart({ scenarios, currency }: ScenarioChartProps) {
                 y={rectY}
                 width={BAR_W}
                 height={Math.max(rectHeight, MIN_H)}
-                fill={fill}
+                className={barClass}
                 rx={3}
               />
               <text
@@ -139,7 +160,7 @@ export function ScenarioChart({ scenarios, currency }: ScenarioChartProps) {
                 dominantBaseline={valueDominantBaseline}
                 fontSize={12}
                 fontWeight="600"
-                fill={valueLabelFill}
+                className={valueLabelClass}
               >
                 {displayValue}
               </text>
@@ -150,7 +171,7 @@ export function ScenarioChart({ scenarios, currency }: ScenarioChartProps) {
                 dominantBaseline="hanging"
                 fontSize={11}
                 fontWeight="500"
-                fill={style.labelFill}
+                className={style.labelClass}
               >
                 {style.shortLabel}
               </text>

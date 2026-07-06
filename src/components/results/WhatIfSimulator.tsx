@@ -12,18 +12,18 @@ interface WhatIfSimulatorProps {
 
 const INSIGHT_STYLE = {
   best: {
-    bg: "bg-emerald-50",
-    border: "border-emerald-200",
-    headingColor: "text-emerald-700",
-    valueColor: "text-emerald-800",
+    bg: "bg-emerald-50 dark:bg-emerald-950/40",
+    border: "border-emerald-200 dark:border-emerald-800",
+    headingColor: "text-emerald-700 dark:text-emerald-400",
+    valueColor: "text-emerald-800 dark:text-emerald-300",
     icon: "↑",
     label: "Mejor palanca",
   },
   worst: {
-    bg: "bg-red-50",
-    border: "border-red-200",
-    headingColor: "text-red-700",
-    valueColor: "text-red-800",
+    bg: "bg-red-50 dark:bg-red-950/40",
+    border: "border-red-200 dark:border-red-800",
+    headingColor: "text-red-700 dark:text-red-400",
+    valueColor: "text-red-800 dark:text-red-300",
     icon: "↓",
     label: "Mayor riesgo",
   },
@@ -80,10 +80,10 @@ export function WhatIfSimulator({ simulations, currency }: WhatIfSimulatorProps)
 
   return (
     <section aria-labelledby="whatif-heading">
-      <h3 id="whatif-heading" className="mb-1 text-lg font-semibold text-slate-800">
+      <h3 id="whatif-heading" className="mb-1 text-lg font-semibold text-slate-800 dark:text-slate-100">
         Simulador: ¿Qué pasa si…?
       </h3>
-      <p className="mb-4 text-sm text-slate-500">
+      <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
         Vista rápida de las dos señales más importantes: la variable que más
         podría mejorar la utilidad y la que más podría empeorarla.
       </p>
